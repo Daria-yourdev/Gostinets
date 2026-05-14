@@ -106,56 +106,12 @@
 
     /* ============================================================
        5. ДОБАВЛЕНИЕ В КОРЗИНУ
-       Корзина живёт в сессии — работает для всех (гость + авторизованный).
+       Обработка кнопок [data-add-to-cart] — в отдельном файле
+       public/js/cart-actions.js, который подключён глобально
+       в layouts/app.blade.php.
+       Это нужно чтобы корзина работала и на страницах без формы
+       фильтров (на главной, например).
        ============================================================ */
-    document.querySelectorAll('[data-add-to-cart]').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const id = btn.dataset.addToCart;
-
-            btn.classList.add('--loading');
-            btn.disabled = true;
-
-            try {
-                const res = await fetch('/cart/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content,
-                        'X-Requested-With': 'XMLHttpRequest',
-                    },
-                    body: JSON.stringify({ product_id: parseInt(id, 10), qty: 1 })
-                });
-                const json = await res.json().catch(() => ({}));
-
-                if (!json.ok) throw new Error(json.message || 'add failed');
-
-                btn.classList.remove('--loading');
-                btn.classList.add('--added');
-                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 L9 17 L4 12"/></svg>';
-
-                // Обновляем счётчик в шапке
-                const counter = document.querySelector('.action__count');
-                if (counter) {
-                    counter.textContent = json.count;
-                    counter.classList.add('--pulse');
-                    setTimeout(() => counter.classList.remove('--pulse'), 600);
-                }
-
-                // Через секунду возвращаем плюс
-                setTimeout(() => {
-                    btn.classList.remove('--added');
-                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
-                    btn.disabled = false;
-                }, 1400);
-            } catch (err) {
-                console.error('[catalog] add-to-cart failed:', err);
-                btn.classList.remove('--loading');
-                btn.disabled = false;
-            }
-        });
-    });
 
     /* ============================================================
        6. ПОДСТРАХОВКА: если на десктопе пользователь меняет цену,

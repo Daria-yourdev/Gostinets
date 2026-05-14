@@ -71,104 +71,11 @@
 
     /* ============================================================
        3. ДОБАВЛЕНИЕ В КОРЗИНУ
+       Обработка кнопок [data-add-to-cart] делегирована в cart-actions.js
+       (подключается глобально в layouts/app.blade.php).
+       Основная кнопка «В мешочек» имеет data-add-to-cart="<id>",
+       а данные о qty берутся из соседнего .product-qty в общем
+       контейнере с data-cart-context.
     ============================================================ */
-    const addBtn = document.getElementById('product-add');
-
-    if (addBtn) {
-        addBtn.addEventListener('click', async () => {
-            // Гость с флагом — auth.js откроет модалку (обрабатывает сам)
-            if (addBtn.hasAttribute('data-requires-auth')) return;
-
-            addBtn.classList.add('--loading');
-            addBtn.disabled = true;
-
-            try {
-                const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
-                const res = await fetch('/cart/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrf,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                    },
-                    body: JSON.stringify({
-                        product_id: parseInt(addBtn.dataset.productId, 10),
-                        qty,
-                    })
-                });
-                const json = await res.json().catch(() => ({}));
-                if (!json.ok) throw new Error(json.message || 'add failed');
-
-                // Успех
-                addBtn.classList.remove('--loading');
-                addBtn.classList.add('--added');
-                addBtn.innerHTML = `
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M20 6 L9 17 L4 12"/>
-                    </svg>
-                    <span class="product-add-btn__text">В мешочке</span>`;
-
-                // Обновляем счётчик в шапке
-                const counter = document.querySelector('.action__count');
-                if (counter) {
-                    counter.textContent = json.count;
-                    counter.classList.add('--pulse');
-                    setTimeout(() => counter.classList.remove('--pulse'), 600);
-                }
-
-                // Через 2 сек возвращаем кнопку
-                setTimeout(() => {
-                    addBtn.classList.remove('--added');
-                    addBtn.disabled = false;
-                    addBtn.innerHTML = `
-                        <span class="product-add-btn__text">В мешочек</span>
-                        <svg class="product-add-btn__arrow" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">
-                            <path d="M5 12h14M13 6l6 6-6 6"/>
-                        </svg>
-                        <span class="product-add-btn__spinner" aria-hidden="true"></span>`;
-                }, 2000);
-
-            } catch (err) {
-                console.error('[product] add-to-cart:', err);
-                addBtn.classList.remove('--loading');
-                addBtn.disabled = false;
-            }
-        });
-    }
-
-    /* ============================================================
-       4. КНОПКИ + в related-карточках
-          (та же логика что в catalog.js)
-    ============================================================ */
-    document.querySelectorAll('[data-add-to-cart]').forEach(btn => {
-        if (btn === addBtn) return; // основная кнопка — уже обработана выше
-
-        btn.addEventListener('click', async () => {
-            if (btn.hasAttribute('data-requires-auth')) return;
-
-            btn.classList.add('--loading');
-            btn.disabled = true;
-
-            await new Promise(r => setTimeout(r, 400));
-
-            btn.classList.remove('--loading');
-            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                <path d="M20 6 L9 17 L4 12"/>
-            </svg>`;
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-                    <path d="M12 5v14M5 12h14"/>
-                </svg>`;
-            }, 1400);
-        });
-    });
 
 })();

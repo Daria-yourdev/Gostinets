@@ -132,7 +132,7 @@
 
                 {{-- Количество + кнопки --}}
                 @if($product->inStock())
-                <div class="product-info__actions">
+                <div class="product-info__actions" data-cart-context>
                     {{-- Счётчик qty --}}
                     <div class="product-qty" id="product-qty" role="group" aria-label="Количество">
                         <button type="button" class="product-qty__btn" id="qty-minus"
@@ -143,6 +143,7 @@
                             </svg>
                         </button>
                         <output class="product-qty__value" id="qty-value"
+                            data-qty-value
                             aria-live="polite">1</output>
                         <button type="button" class="product-qty__btn" id="qty-plus"
                             aria-label="Увеличить">
@@ -154,10 +155,10 @@
                     </div>
 
                     <div class="product-info__btns">
-                        {{-- Основная кнопка --}}
+                        {{-- Основная кнопка — обрабатывается cart-actions.js --}}
                         <button type="button" class="btn-primary product-add-btn"
                             id="product-add"
-                            data-product-id="{{ $product->id }}">
+                            data-add-to-cart="{{ $product->id }}">
                             <span class="product-add-btn__text">В мешочек</span>
                             <svg class="product-add-btn__arrow" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"

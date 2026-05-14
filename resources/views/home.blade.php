@@ -144,29 +144,28 @@
         </div>
 
         @php
-        $jams = [
-        ['name' => 'Вишнёвое', 'hand' => 'с косточкой', 'jam' => '#7E1A1A', 'price' => 320, 'tag' => 'ЛЕТО'],
-        ['name' => 'Абрикосовое','hand' => 'медовое', 'jam' => '#C9A961', 'price' => 290, 'tag' => ''],
-        ['name' => 'Лимонное', 'hand' => 'с имбирём', 'jam' => '#C9A961', 'price' => 340, 'tag' => 'НОВИНКА'],
-        ['name' => 'Малиновое','hand' => 'с лесных троп', 'jam' => '#6B1818', 'price' => 380, 'tag' => 'ХИТ'],
-        ['name' => 'Ежевичное','hand' => 'полуночное', 'jam' => '#2E1414', 'price' => 360, 'tag' => ''],
-        ];
+            // Берём 5 актуальных банок из БД для лендинга
+            $jams = \App\Models\Product::active()->take(5)->get();
         @endphp
 
         <div class="catalog__grid">
             @foreach ($jams as $j)
-            <article class="jar-card">
-                @if ($j['tag'])
-                <div class="jar-card__tag">{{ $j['tag'] }}</div>
+            <article class="jar-card" style="--jam: {{ $j->jamColor() }}">
+                @if ($j->badge)
+                <div class="jar-card__tag">{{ $j->badge }}</div>
                 @endif
-                <div class="jar-card__visual">
-                    <img src="{{ asset('media/catalog/catalog-card-1.png') }}" class="jar-svg" alt="">
-                </div>
-                <h3 class="jar-card__name">{{ $j['name'] }}<br>варенье</h3>
-                <div class="jar-card__hand">{{ $j['hand'] }}</div>
+                <a href="{{ route('product', $j->slug) }}" class="jar-card__visual">
+                    <img src="{{ asset($j->image_path ?: 'media/catalog/catalog-card-1.png') }}" class="jar-svg" alt="{{ $j->name }}">
+                </a>
+                <a href="{{ route('product', $j->slug) }}" style="text-decoration: none; color: inherit;">
+                    <h3 class="jar-card__name">{{ $j->name }}</h3>
+                    <div class="jar-card__hand">{{ $j->subtitle }}</div>
+                </a>
                 <div class="jar-card__row">
-                    <div class="jar-card__price">{{ $j['price'] }} ₽<small>/ 250 гр</small></div>
-                    <button type="button" class="jar-card__add" aria-label="В корзину" title="В корзину">
+                    <div class="jar-card__price">{{ $j->priceFormatted() }}<small>/ {{ $j->weight }} гр</small></div>
+                    <button type="button" class="jar-card__add"
+                            aria-label="В мешочек" title="В мешочек"
+                            data-add-to-cart="{{ $j->id }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
                             <path d="M12 5v14M5 12h14" />

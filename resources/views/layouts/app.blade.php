@@ -507,6 +507,8 @@
 
     <script src="{{ asset('js/home.js') }}" defer></script>
     <script src="{{ asset('js/auth.js') }}" defer></script>
+    {{-- Корзина: глобальный обработчик [data-add-to-cart] — работает на ВСЕХ страницах --}}
+    <script src="{{ asset('js/cart-actions.js') }}" defer></script>
 </body>
 
 </html>
