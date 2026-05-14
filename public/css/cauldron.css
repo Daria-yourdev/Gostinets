@@ -1,0 +1,1275 @@
+/* ===========================================================
+   ГОСТИНЕЦЪ — стили страницы «Котелок»
+   Использует переменные из home.css (--bg, --ink, --burgundy, --gold...)
+   =========================================================== */
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+}
+
+.breadcrumbs a {
+    color: inherit;
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.breadcrumbs a:hover {
+    opacity: 1;
+    color: var(--burgundy);
+}
+
+.breadcrumbs__current {
+    color: var(--burgundy);
+}
+
+.breadcrumbs>span[aria-hidden="true"] {
+    opacity: 0.4;
+}
+
+/* -----------------------------------------------------------
+   ОБЩИЙ КАРКАС СТРАНИЦЫ
+   ----------------------------------------------------------- */
+.cauldron-page {
+    padding: 28px 0 80px;
+    background:
+        radial-gradient(ellipse 800px 600px at 50% 0%,
+            rgba(73, 14, 14, 0.06) 0%, transparent 70%),
+        var(--bg);
+    position: relative;
+    overflow-x: clip;
+}
+
+.cauldron-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-radial-gradient(circle at 80% 20%,
+            transparent 0,
+            transparent 100px,
+            rgba(201, 169, 97, 0.04) 102px,
+            transparent 104px);
+    pointer-events: none;
+}
+
+.cauldron-page>.container {
+    position: relative;
+    z-index: 2;
+}
+
+.cauldron-page__head {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.cauldron-page__head h1 {
+    font-family: var(--local);
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1.05;
+    margin: 8px 0;
+    color: var(--ink);
+}
+
+.cauldron-page__head h1 em {
+    color: var(--burgundy);
+    font-style: italic;
+}
+
+.cauldron-page__head p {
+    font-family: var(--sans);
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 540px;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+
+/* -----------------------------------------------------------
+   БАННЕР ДЛЯ ГОСТЕЙ — приглашение зарегистрироваться
+   ----------------------------------------------------------- */
+.cauldron-gate {
+    /* display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 28px; */
+    align-items: center;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px 36px;
+    margin-bottom: 36px;
+    /* box-shadow: 12px 12px 0 var(--burgundy); */
+    position: relative;
+    overflow: hidden;
+}
+
+.cauldron-gate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-radial-gradient(circle at 90% 50%,
+            transparent 0,
+            transparent 50px,
+            rgba(201, 169, 97, 0.06) 51px,
+            transparent 53px);
+    pointer-events: none;
+}
+
+.cauldron-gate__seal {
+    width: 120px;
+    height: 120px;
+    color: var(--gold);
+    position: relative;
+    z-index: 2;
+}
+
+.cauldron-gate__seal svg {
+    width: 100%;
+    height: 100%;
+    animation: sealRotate 60s linear infinite;
+}
+
+@keyframes sealRotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cauldron-gate__copy {
+    position: relative;
+    z-index: 2;
+}
+
+.cauldron-gate__kicker {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.cauldron-gate h2 {
+    font-family: var(--local);
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 0 0 12px;
+    color: var(--cream);
+    line-height: 1.15;
+}
+
+.cauldron-gate h2 em {
+    font-style: italic;
+    color: var(--gold);
+}
+
+.cauldron-gate p {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+    color: rgba(255, 250, 240, 0.85);
+    max-width: 580px;
+}
+
+.cauldron-gate p strong {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.cauldron-gate__cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+
+.cauldron-gate__cta .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+}
+
+.cauldron-gate__cta .btn-primary:hover {
+    background: var(--cream);
+    border-color: var(--cream);
+}
+
+.cauldron-gate__cta .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid rgba(255, 250, 240, 0.4);
+}
+
+.cauldron-gate__cta .btn-ghost:hover {
+    border-color: var(--cream);
+    background: rgba(255, 250, 240, 0.08);
+}
+
+.cauldron-gate__perks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.cauldron-gate__perks li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: rgba(255, 250, 240, 0.85);
+}
+
+.cauldron-gate__perks svg {
+    width: 16px;
+    height: 16px;
+    color: var(--gold);
+    flex-shrink: 0;
+}
+
+.cauldron-gate__preview {
+    text-align: center;
+    margin: 18px 0 28px;
+}
+
+.cauldron-gate__preview-note {
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-2);
+    opacity: 0.7;
+    margin: 0;
+}
+
+
+/* -----------------------------------------------------------
+   КОНСТРУКТОР — двухколонный
+   ----------------------------------------------------------- */
+.cauldron {
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+
+/* -----------------------------------------------------------
+   ЛЕВАЯ КОЛОНКА — котёл + превью
+   ----------------------------------------------------------- */
+.cauldron__stage {
+    position: sticky;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    margin-top: 55px;
+}
+
+.cauldron__vessel {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    /* aspect-ratio: 320 / 280; */
+    margin-top: 15px;
+    /* место для пара */
+}
+
+.cauldron__svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(8px 12px 24px rgba(26, 22, 20, 0.3));
+}
+
+/* Пар над котлом */
+.cauldron__steam {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cauldron__steam-bubble {
+    position: absolute;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, rgba(255, 250, 240, 0.7) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: steamRise 4s ease-out infinite;
+}
+
+.cauldron__steam-bubble:nth-child(1) {
+    left: 30%;
+    animation-delay: 0s;
+}
+
+.cauldron__steam-bubble:nth-child(2) {
+    left: 45%;
+    animation-delay: 0.8s;
+}
+
+.cauldron__steam-bubble:nth-child(3) {
+    left: 55%;
+    animation-delay: 1.6s;
+}
+
+.cauldron__steam-bubble:nth-child(4) {
+    left: 40%;
+    animation-delay: 2.4s;
+}
+
+.cauldron__steam-bubble:nth-child(5) {
+    left: 50%;
+    animation-delay: 3.2s;
+}
+
+@keyframes steamRise {
+    0% {
+        transform: translate(0, 20px) scale(0.4);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(var(--drift, -10px), -80px) scale(2);
+        opacity: 0;
+    }
+}
+
+.cauldron__steam-bubble:nth-child(2n) {
+    --drift: 12px;
+}
+
+.cauldron__steam-bubble:nth-child(3n) {
+    --drift: -16px;
+}
+
+/* Контейнер для падающих ингредиентов */
+.cauldron__drops {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.cauldron__drop {
+    position: absolute;
+    top: -40px;
+    width: 28px;
+    height: 28px;
+    animation: dropFall 0.8s cubic-bezier(0.5, 0, 1, 1) forwards;
+}
+
+@keyframes dropFall {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translate(0, 200px) rotate(280deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(0, 250px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Превью этикетки */
+.cauldron__preview {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.cauldron__label-preview {
+    width: 220px;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--burgundy);
+    padding: 6px;
+}
+
+.cauldron__label-frame {
+    border: 1px dashed var(--ink);
+    padding: 18px 16px;
+    text-align: center;
+}
+
+.cauldron__label-kicker {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin-bottom: 10px;
+}
+
+.cauldron__label-name {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 6px;
+    word-break: break-word;
+    min-height: 22px;
+}
+
+.cauldron__label-desc {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-2);
+    opacity: 0.7;
+    margin-bottom: 12px;
+    min-height: 16px;
+    line-height: 1.3;
+}
+
+.cauldron__label-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ink);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ink-2);
+    opacity: 0.6;
+}
+
+/* Цена */
+.cauldron__price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.cauldron__price-kicker {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    opacity: 0.55;
+}
+
+.cauldron__price-value {
+    font-family: var(--local);
+    font-size: 42px;
+    color: var(--burgundy);
+    transition: transform 0.3s;
+}
+
+.cauldron__price-value.--pulse {
+    animation: pricePulse 0.4s ease;
+}
+
+@keyframes pricePulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+        color: var(--gold);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cauldron__price-currency {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--burgundy);
+}
+
+
+/* -----------------------------------------------------------
+   ПРАВАЯ КОЛОНКА — форма
+   ----------------------------------------------------------- */
+.cauldron__form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Прогресс-шаги */
+.cauldron-steps {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px;
+    gap: 0;
+    border-bottom: 1px solid rgba(26, 22, 20, 0.15);
+    ;
+    padding-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.cauldron-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    opacity: 0.5;
+    transition: opacity 0.3s, color 0.3s;
+    white-space: nowrap;
+}
+
+.cauldron-step span {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.cauldron-step.--done {
+    opacity: 1;
+    color: var(--burgundy);
+}
+
+.cauldron-step.--done span {
+    background: var(--burgundy);
+    color: var(--cream);
+    border-color: var(--burgundy);
+}
+
+/* Блок шага */
+.cauldron-block {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 24px 26px;
+    /* box-shadow: 6px 6px 0 rgba(73, 14, 14, 0.4); */
+}
+
+.cauldron-block__head {
+    margin-bottom: 18px;
+}
+
+.cauldron-block__num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.cauldron-block__title {
+    font-family: var(--local);
+    font-size: 26px;
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1.15;
+}
+
+.cauldron-block__title em {
+    color: var(--burgundy);
+    font-style: italic;
+}
+
+.cauldron-block__hint {
+    font-family: var(--hand);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-2);
+    opacity: 0.7;
+    margin: 0;
+}
+
+/* Ошибка */
+.cauldron-error {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--burgundy);
+    min-height: 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.cauldron-error.--show {
+    opacity: 1;
+}
+
+
+/* -----------------------------------------------------------
+   СЕТКА ЯГОД (для шага 1 и 2)
+   ----------------------------------------------------------- */
+.cauldron-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+.cauldron-grid--small {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+}
+
+.berry-card {
+    cursor: pointer;
+    user-select: none;
+}
+
+.berry-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.berry-card__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 8px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    background: var(--bg);
+    transition: all 0.25s;
+    height: 100%;
+}
+
+.berry-card:hover .berry-card__inner {
+    background: var(--bg-warm);
+    transform: translateY(-2px);
+}
+
+.berry-card input:checked+.berry-card__inner {
+    border-color: var(--burgundy);
+    background: var(--bg);
+    box-shadow: 4px 4px 0 var(--burgundy);
+    transform: translate(-1px, -1px);
+}
+
+.berry-card--small .berry-card__inner {
+    padding: 10px 6px 8px;
+}
+
+.berry-card__visual {
+    width: 48px;
+    height: 48px;
+}
+
+.berry-card__visual--small {
+    width: 36px;
+    height: 36px;
+}
+
+.berry-card__visual svg {
+    width: 100%;
+    height: 100%;
+}
+
+.berry-card__name {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+
+.berry-card input:checked+.berry-card__inner .berry-card__name {
+    color: var(--burgundy);
+    font-weight: 600;
+}
+
+/* Заблокированная карточка (после выбора 2 ягод) */
+.berry-card.--disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+
+/* -----------------------------------------------------------
+   ЧИПЫ СПЕЦИЙ (шаг 3)
+   ----------------------------------------------------------- */
+.cauldron-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cauldron-chip {
+    cursor: pointer;
+    user-select: none;
+}
+
+.cauldron-chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cauldron-chip span {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    transition: all 0.2s;
+}
+
+.cauldron-chip:hover span {
+    background: var(--bg-warm);
+}
+
+.cauldron-chip input:checked+span {
+    background: var(--burgundy);
+    color: var(--cream);
+    border-color: var(--burgundy);
+}
+
+.cauldron-chip.--disabled {
+    pointer-events: none;
+    opacity: 0.35;
+}
+
+
+/* -----------------------------------------------------------
+   РАДИО ПОДСЛАСТИТЕЛИ (шаг 4)
+   ----------------------------------------------------------- */
+.cauldron-radios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+
+.cauldron-radio {
+    cursor: pointer;
+}
+
+.cauldron-radio input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cauldron-radio__inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    background: var(--bg);
+    transition: all 0.2s;
+}
+
+.cauldron-radio:hover .cauldron-radio__inner {
+    background: var(--bg-warm);
+}
+
+.cauldron-radio input:checked+.cauldron-radio__inner {
+    border-color: var(--burgundy);
+    background: var(--bg);
+    box-shadow: 3px 3px 0 var(--burgundy);
+}
+
+.cauldron-radio__dot {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.2s;
+}
+
+.cauldron-radio__dot::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--burgundy);
+    transform: scale(0);
+    transition: transform 0.2s;
+}
+
+.cauldron-radio input:checked+.cauldron-radio__inner .cauldron-radio__dot {
+    border-color: var(--burgundy);
+}
+
+.cauldron-radio input:checked+.cauldron-radio__inner .cauldron-radio__dot::after {
+    transform: scale(1);
+}
+
+.cauldron-radio__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cauldron-radio__text strong {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.cauldron-radio__text small {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+}
+
+
+/* -----------------------------------------------------------
+   РАЗМЕРЫ БАНКИ (шаг 5)
+   ----------------------------------------------------------- */
+.cauldron-sizes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.cauldron-size {
+    cursor: pointer;
+}
+
+.cauldron-size input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cauldron-size__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    background: var(--bg);
+    transition: all 0.2s;
+}
+
+.cauldron-size:hover .cauldron-size__inner {
+    background: var(--bg-warm);
+}
+
+.cauldron-size input:checked+.cauldron-size__inner {
+    border-color: var(--burgundy);
+    box-shadow: 4px 4px 0 var(--burgundy);
+}
+
+/* SVG-банки разных размеров (рисуем CSS-ом) */
+.cauldron-size__jar {
+    display: block;
+    background: var(--burgundy);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px 4px 8px 8px;
+    position: relative;
+}
+
+.cauldron-size__jar::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 6px;
+    background: var(--ink);
+    border-radius: 2px;
+}
+
+.cauldron-size__jar--s {
+    width: 30px;
+    height: 36px;
+}
+
+.cauldron-size__jar--m {
+    width: 36px;
+    height: 50px;
+}
+
+.cauldron-size__jar--l {
+    width: 42px;
+    height: 64px;
+}
+
+.cauldron-size__label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.cauldron-size__label strong {
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--ink);
+}
+
+.cauldron-size__label small {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+}
+
+
+/* -----------------------------------------------------------
+   ПОЛЯ ВВОДА (шаг 6)
+   ----------------------------------------------------------- */
+.cauldron-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cauldron-field {
+    display: block;
+}
+
+.cauldron-field__label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+}
+
+.cauldron-field__label small {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: none;
+    margin-left: 6px;
+}
+
+.cauldron-field input,
+.cauldron-field textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    background: var(--bg);
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+}
+
+.cauldron-field textarea {
+    resize: vertical;
+    min-height: 70px;
+    font-family: var(--serif);
+}
+
+.cauldron-field input:focus,
+.cauldron-field textarea:focus {
+    border-color: var(--burgundy);
+    background: var(--paper);
+}
+
+.cauldron-field__hint {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-2);
+    opacity: 0.55;
+}
+
+
+/* -----------------------------------------------------------
+   КНОПКИ ИТОГА
+   ----------------------------------------------------------- */
+.cauldron-block--actions {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+}
+
+.cauldron-block--actions .cauldron-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(255, 250, 240, 0.65);
+    margin: 14px 0 0;
+    line-height: 1.5;
+}
+
+.cauldron-submit {
+    width: 100%;
+    padding: 18px 28px;
+    background: var(--burgundy);
+    color: var(--cream);
+    border: 0;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.25s, transform 0.2s;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.cauldron-submit:hover {
+    background: var(--brick);
+    transform: translateY(-1px);
+}
+
+.cauldron-submit:disabled {
+    opacity: 0.7;
+    cursor: progress;
+    transform: none;
+}
+
+.cauldron-submit__price {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.cauldron-submit__arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s;
+}
+
+.cauldron-submit:hover .cauldron-submit__arrow {
+    transform: translateX(4px);
+}
+
+.cauldron-submit__lock {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+}
+
+.cauldron-submit--locked {
+    background: var(--gold);
+    color: var(--ink);
+}
+
+.cauldron-submit--locked:hover {
+    background: var(--cream);
+}
+
+.cauldron-submit--locked .cauldron-submit__price {
+    color: var(--burgundy);
+}
+
+.cauldron-submit__spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 250, 240, 0.3);
+    border-top-color: var(--cream);
+    border-radius: 50%;
+    display: none;
+    animation: spin 0.75s linear infinite;
+}
+
+.cauldron-submit.--loading .cauldron-submit__text,
+.cauldron-submit.--loading .cauldron-submit__price,
+.cauldron-submit.--loading .cauldron-submit__arrow {
+    visibility: hidden;
+}
+
+.cauldron-submit.--loading .cauldron-submit__spinner {
+    display: block;
+    position: absolute;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cauldron-draft {
+    width: 100%;
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid rgba(255, 250, 240, 0.3);
+    padding: 14px 24px;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.cauldron-draft:hover {
+    border-color: var(--cream);
+    background: rgba(255, 250, 240, 0.06);
+}
+
+/* Flash-сообщение */
+.cauldron-flash {
+    margin-top: 14px;
+    padding: 0 14px;
+    max-height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.4;
+    transition: max-height 0.3s, padding 0.3s;
+}
+
+.cauldron-flash.--show {
+    padding: 12px 14px;
+    max-height: 200px;
+}
+
+.cauldron-flash.--success {
+    background: rgba(92, 120, 32, 0.2);
+    color: #C0D08A;
+    border: 1px solid rgba(92, 120, 32, 0.4);
+}
+
+.cauldron-flash.--error {
+    background: rgba(196, 69, 69, 0.15);
+    color: #F0B0A0;
+    border: 1px solid rgba(196, 69, 69, 0.4);
+}
+
+
+/* -----------------------------------------------------------
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ----------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .cauldron {
+        grid-template-columns: 380px 1fr;
+        gap: 28px;
+    }
+}
+
+@media (max-width: 900px) {
+    .cauldron {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .cauldron__stage {
+        position: static;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .cauldron-gate {
+        /* grid-template-columns: 1fr; */
+        text-align: center;
+        padding: 28px 24px;
+    }
+
+    .cauldron-gate__seal {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+    }
+
+    .cauldron-gate__cta {
+        justify-content: center;
+    }
+
+    .cauldron-gate__perks {
+        text-align: left;
+    }
+}
+
+@media (max-width: 600px) {
+    .cauldron-page__head h1 {
+        font-size: 36px;
+    }
+
+    .cauldron-page__head p {
+        font-size: 15px;
+    }
+
+    .cauldron-block {
+        padding: 18px;
+    }
+
+    .cauldron-steps {
+        gap: 4px;
+        font-size: 9px;
+    }
+
+    .cauldron-step span {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
+
+    .cauldron-sizes {
+        grid-template-columns: 1fr;
+    }
+
+    .cauldron-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cauldron-gate__cta {
+        flex-direction: column;
+    }
+
+    .cauldron-gate__cta button {
+        width: 100%;
+    }
+}
