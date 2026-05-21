@@ -1,0 +1,377 @@
+/* ===========================================================
+   ГОСТИНЕЦЪ — личный кабинет / мои заказы
+   =========================================================== */
+
+.account-page {
+    padding: 32px 0 80px;
+    background: var(--bg);
+}
+
+/* Шапка */
+.account-head {
+    margin-bottom: 36px;
+}
+
+.account-head h1 {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.account-head__title {
+    font-family: var(--local);
+    font-size: clamp(36px, 5vw, 54px);
+    line-height: 1.1;
+    color: var(--ink);
+}
+
+.account-head__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-2);
+    opacity: 0.6;
+}
+
+
+/* Пустое состояние */
+.account-empty {
+    text-align: center;
+    padding: 80px 20px;
+    background: var(--paper);
+    border: 1.5px dashed var(--ink);
+    max-width: 480px;
+    margin: 40px auto;
+}
+
+.account-empty svg {
+    width: 80px;
+    height: 80px;
+    color: var(--burgundy);
+    opacity: 0.4;
+    margin-bottom: 18px;
+}
+
+.account-empty h2 {
+    font-family: var(--local);
+    font-size: 34px;
+    color: var(--burgundy);
+    margin: 0 0 10px;
+}
+
+.account-empty p {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-2);
+    margin: 0 0 24px;
+}
+
+/* Секции */
+.account-section {
+    margin-bottom: 48px;
+}
+
+.account-section__title {
+    font-family: var(--local);
+    font-size: 30px;
+    color: var(--burgundy);
+    margin: 0 0 6px;
+    font-weight: normal;
+}
+
+.account-section__hint {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-2);
+    opacity: 0.65;
+    margin: 0 0 18px;
+}
+
+
+/* Карточка заказа */
+.account-orders {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.account-order {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    box-shadow: 4px 4px 0 rgba(73, 14, 14, 0.2);
+    overflow: hidden;
+}
+
+.account-order__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(26, 22, 20, 0.1);
+    flex-wrap: wrap;
+}
+
+.account-order__number {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--ink);
+    flex: 1;
+}
+
+.account-order__date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+}
+
+/* Список позиций */
+.account-order__items {
+    list-style: none;
+    padding: 12px 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-order__item {
+    display: grid;
+    grid-template-columns: 48px 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.account-order__item-img {
+    width: 48px;
+    height: 48px;
+    background: var(--bg-warm);
+    border: 1px solid rgba(26, 22, 20, 0.1);
+    overflow: hidden;
+}
+
+.account-order__item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.account-order__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.account-order__item-info strong {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.account-order__item-info span {
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--burgundy);
+}
+
+.account-order__item-qty {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-2);
+    opacity: 0.65;
+    white-space: nowrap;
+}
+
+.account-order__item-price {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Подвал карточки */
+.account-order__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--bg-warm);
+    border-top: 1px solid rgba(26, 22, 20, 0.1);
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.account-order__delivery {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+}
+
+.account-order__total {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-2);
+}
+
+.account-order__total strong {
+    font-family: var(--local);
+    font-size: 22px;
+    color: var(--burgundy);
+    margin-left: 6px;
+}
+
+.account-order__actions {
+    padding: 8px 20px;
+    border-top: 1px dashed rgba(26, 22, 20, 0.15);
+}
+
+.account-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--burgundy);
+    text-decoration: none;
+}
+
+.account-link:hover {
+    text-decoration: underline;
+}
+
+
+/* Статусы */
+.account-status {
+    display: inline-block;
+    padding: 4px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+}
+
+.account-status--pending    { color: #B8860B; border-color: #B8860B; }
+.account-status--paid       { color: var(--moss); border-color: var(--moss); }
+.account-status--processing { color: var(--gold); border-color: var(--gold); }
+.account-status--shipped    { color: #2E5A8E; border-color: #2E5A8E; }
+.account-status--delivered  { color: #1F5F1F; border-color: #1F5F1F; background: rgba(31, 95, 31, 0.05); }
+.account-status--canceled   { color: var(--burgundy); border-color: var(--burgundy); }
+.account-status--ordered    { color: #B8860B; border-color: #B8860B; }
+.account-status--cooking    { color: var(--burgundy); border-color: var(--burgundy); }
+.account-status--ready      { color: var(--moss); border-color: var(--moss); }
+
+/* Пагинация */
+.account-pagination {
+    margin-top: 20px;
+}
+
+
+/* Кастомные варенья */
+.account-jams {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.account-jam {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 20px;
+    box-shadow: 4px 4px 0 rgba(201, 169, 97, 0.3);
+}
+
+.account-jam__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.account-jam__name {
+    font-family: var(--hand);
+    font-size: 22px;
+    color: var(--burgundy);
+    font-weight: normal;
+}
+
+.account-jam__props {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.account-jam__props li {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.4;
+}
+
+.account-jam__props span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    opacity: 0.6;
+    flex-shrink: 0;
+    padding-top: 2px;
+    min-width: 90px;
+}
+
+.account-jam__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(26, 22, 20, 0.2);
+}
+
+.account-jam__price {
+    font-family: var(--display);
+    font-size: 24px;
+    color: var(--burgundy);
+}
+
+.account-jam__date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    opacity: 0.55;
+}
+
+
+/* Адаптация */
+@media (max-width: 640px) {
+    .account-order__item {
+        grid-template-columns: 40px 1fr auto;
+    }
+
+    .account-order__item-price {
+        display: none;
+    }
+
+    .account-jams {
+        grid-template-columns: 1fr;
+    }
+}

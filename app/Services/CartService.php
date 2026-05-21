@@ -75,12 +75,6 @@ class CartService
         Session::put(self::KEY, $cart);
     }
 
-    /** Полностью очистить корзину (вызывается после успешной оплаты). */
-    public function clear(): void
-    {
-        Session::forget(self::KEY);
-    }
-
     /* ===========================================================
        ЧТЕНИЕ
        =========================================================== */
@@ -91,10 +85,10 @@ class CartService
         return (array) Session::get(self::KEY, []);
     }
 
-    /** Кол-во позиций (для счётчика в шапке). */
+    /** Кол-во позиций (обычные + кастомы). */
     public function count(): int
     {
-        return array_sum($this->raw());
+        return array_sum($this->raw()) + count($this->rawCustoms());
     }
 
     /** Кол-во уникальных банок. */
@@ -106,7 +100,7 @@ class CartService
     /** Корзина пустая? */
     public function isEmpty(): bool
     {
-        return empty($this->raw());
+        return empty($this->raw()) && empty($this->rawCustoms());
     }
 
     /**
@@ -146,10 +140,7 @@ class CartService
         return $this->items()->sum('subtotal');
     }
 
-    /**
-     * Подсчёт стоимости доставки.
-     * Если subtotal > 3000 ₽ — СДЭК и Почта бесплатно.
-     */
+    /** Подсчёт стоимости доставки. */
     public function deliveryCost(string $method): int
     {
         if ($this->subtotal() >= 3000) return 0;
@@ -160,5 +151,71 @@ class CartService
     public function total(string $deliveryMethod = 'cdek', int $discount = 0): int
     {
         return max(0, $this->subtotal() + $this->deliveryCost($deliveryMethod) - $discount);
+    }
+
+    /** Полностью очистить корзину (и товары, и кастомы). */
+    public function clear(): void
+    {
+        Session::forget(self::KEY);
+        Session::forget(self::KEY . '_customs');
+    }
+
+    /* ===========================================================
+       КАСТОМНОЕ ВАРЕНЬЕ ИЗ КОТЛА
+       Хранится в отдельном сессионном ключе: cart_customs
+       Структура: [custom_jam_id => 1]  (qty всегда 1)
+       =========================================================== */
+    private const CUSTOM_KEY = 'cart_customs';
+
+    /** Сырой массив custom_jam_id => qty. */
+    public function rawCustoms(): array
+    {
+        return (array) Session::get(self::CUSTOM_KEY, []);
+    }
+
+    /** Добавить кастомный котёл в корзину. */
+    public function addCustom(int $customJamId): void
+    {
+        $customs = $this->rawCustoms();
+        $customs[$customJamId] = 1;
+        Session::put(self::CUSTOM_KEY, $customs);
+    }
+
+    /** Удалить кастом из корзины. */
+    public function removeCustom(int $customJamId): void
+    {
+        $customs = $this->rawCustoms();
+        unset($customs[$customJamId]);
+        Session::put(self::CUSTOM_KEY, $customs);
+    }
+
+    /**
+     * Список кастомных позиций с подтянутыми данными из БД.
+     * Каждая позиция: ['custom' => CustomJam, 'qty' => 1, 'subtotal' => int]
+     */
+    public function customItems(): \Illuminate\Support\Collection
+    {
+        $raw = $this->rawCustoms();
+        if (empty($raw)) return collect();
+
+        $jams = \App\Models\CustomJam::whereIn('id', array_keys($raw))
+            ->where('status', 'draft')
+            ->get()
+            ->keyBy('id');
+
+        // Чистим из сессии то, что уже не draft (например, уже заказано)
+        $stale = array_diff(array_keys($raw), $jams->keys()->all());
+        if ($stale) {
+            foreach ($stale as $id) unset($raw[$id]);
+            Session::put(self::CUSTOM_KEY, $raw);
+        }
+
+        return $jams->map(function ($jam) {
+            return [
+                'custom'   => $jam,
+                'qty'      => 1,
+                'subtotal' => $jam->price,
+            ];
+        })->values();
     }
 }

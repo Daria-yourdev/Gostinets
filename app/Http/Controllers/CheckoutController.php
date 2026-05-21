@@ -36,11 +36,14 @@ class CheckoutController extends Controller
                 ->with('flash', 'Сначала положи что-нибудь в мешочек.');
         }
 
-        $items    = $this->cart->items();
-        $subtotal = $this->cart->subtotal();
+        $items       = $this->cart->items();
+        $customItems = $this->cart->customItems();
+        $subtotal    = $this->cart->subtotal()
+                     + $customItems->sum('subtotal');
 
         return view('checkout.index', [
             'items'           => $items,
+            'customItems'     => $customItems,
             'subtotal'        => $subtotal,
             'deliveryMethods' => Order::DELIVERY_METHODS,
             'freeShipFrom'    => 3000,
@@ -78,13 +81,14 @@ class CheckoutController extends Controller
         ]);
 
         // Снапшот корзины и сумм
-        $items = $this->cart->items();
-        $subtotal = $this->cart->subtotal();
-        $delivery = $this->cart->deliveryCost($data['delivery_method']);
-        $total = $subtotal + $delivery;
+        $items       = $this->cart->items();
+        $customItems = $this->cart->customItems();
+        $subtotal    = $this->cart->subtotal() + $customItems->sum('subtotal');
+        $delivery    = $this->cart->deliveryCost($data['delivery_method']);
+        $total       = $subtotal + $delivery;
 
         // Создаём заказ + позиции в транзакции
-        $order = DB::transaction(function () use ($data, $items, $subtotal, $delivery, $total) {
+        $order = DB::transaction(function () use ($data, $items, $customItems, $subtotal, $delivery, $total) {
             $order = Order::create(array_merge($data, [
                 'user_id'       => auth()->id(),
                 'subtotal'      => $subtotal,
@@ -94,6 +98,7 @@ class CheckoutController extends Controller
                 'status'        => 'pending',
             ]));
 
+            // Обычные товары из кладовой
             foreach ($items as $row) {
                 $p = $row['product'];
                 OrderItem::create([
@@ -106,6 +111,24 @@ class CheckoutController extends Controller
                     'qty'              => $row['qty'],
                     'subtotal'         => $row['subtotal'],
                 ]);
+            }
+
+            // Кастомные варенья из котла
+            foreach ($customItems as $row) {
+                $jam = $row['custom'];
+                OrderItem::create([
+                    'order_id'         => $order->id,
+                    'product_id'       => null,
+                    'custom_jam_id'    => $jam->id,
+                    'product_name'     => 'Своё варенье · ' . ($jam->label_name ?: $jam->berry_main),
+                    'product_subtitle' => $jam->jar_size . ' мл',
+                    'product_image'    => null,
+                    'price'            => $jam->price,
+                    'qty'              => 1,
+                    'subtotal'         => $jam->price,
+                ]);
+                // Помечаем как заказанный
+                $jam->update(['status' => 'ordered']);
             }
 
             return $order;

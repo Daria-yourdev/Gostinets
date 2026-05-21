@@ -104,17 +104,18 @@ class CauldronController extends Controller
             'dedication'   => $data['dedication'] ?? null,
             'whisper'      => $data['whisper'] ?? null,
             'price'        => CustomJam::calculatePrice($data),
-            'status'       => $request->input('action') === 'order' ? 'ordered' : 'draft',
+            'status'       => 'draft', // Всегда draft — заказ идёт через корзину
         ]);
+
+        // Кладём в сессионную корзину
+        app(\App\Services\CartService::class)->addCustom($jam->id);
 
         return response()->json([
             'ok'      => true,
             'jam_id'  => $jam->id,
             'price'   => $jam->price,
-            'message' => $jam->status === 'ordered'
-                ? 'Брошено в котёл. Дарина уже разжигает огонь.'
-                : 'Записано в гримуар. Сможешь вернуться и заказать варку позже.',
-            'redirect'=> $jam->status === 'ordered' ? url('/orders') : null,
+            'message' => 'Котёл в мешочке! Можно нести с собой или добавить ещё банок.',
+            'redirect'=> url('/cart'),
         ]);
     }
 

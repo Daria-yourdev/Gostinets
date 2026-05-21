@@ -77,7 +77,7 @@
                                  style="--jam: {{ $p->jamColor() }}">
 
                             <a href="{{ route('product', $p->slug) }}" class="cart-item__visual">
-                                <div class="cart-item__jambar" aria-hidden="true"></div>
+                                <!-- <div class="cart-item__jambar" aria-hidden="true"></div> -->
                                 <img src="{{ asset($p->image_path ?: 'media/catalog/catalog-card-1.png') }}"
                                      alt="{{ $p->name }}" loading="lazy">
                             </a>
@@ -127,19 +127,78 @@
                     @endforeach
                 </div>
 
+                {{-- Из котла: кастомные варенья --}}
+                @if(isset($customItems) && $customItems->count() > 0)
+                    <div class="cart-list cart-list--customs">
+                        <h3 class="cart-list__section-title">Из котла</h3>
+                        @foreach($customItems as $row)
+                            @php $jam = $row['custom']; @endphp
+                            <article class="cart-item cart-item--custom" data-custom-id="{{ $jam->id }}"
+                                     style="--jam: var(--burgundy)">
+
+                                <div class="cart-item__visual cart-item__visual--custom">
+                                    <div class="cart-item__jambar" aria-hidden="true"></div>
+                                    <svg viewBox="0 0 60 72" fill="none" aria-hidden="true">
+                                        <path d="M15 22 L45 22 L42 62 Q42 68 36 68 L24 68 Q18 68 18 62 Z"
+                                              fill="var(--burgundy)" opacity="0.2"/>
+                                        <path d="M12 22 L48 22" stroke="var(--burgundy)" stroke-width="3"/>
+                                        <path d="M24 16 L24 10 Q24 7 27 7 L33 7 Q36 7 36 10 L36 16"
+                                              stroke="var(--burgundy)" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                </div>
+
+                                <div class="cart-item__info">
+                                    <h3 class="cart-item__name">«{{ $jam->label_name ?: 'Своё варенье' }}»</h3>
+                                    <p class="cart-item__subtitle">{{ $jam->berry_main }}</p>
+                                    <div class="cart-item__meta">
+                                        <span>{{ $jam->jar_size }} мл</span>
+                                        @php
+                                            $extras = is_array($jam->berry_extras)
+                                                ? $jam->berry_extras
+                                                : json_decode($jam->berry_extras ?? '[]', true);
+                                        @endphp
+                                        @if(!empty($extras))
+                                            <span aria-hidden="true">·</span>
+                                            <span>+ {{ implode(', ', $extras) }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{-- Кастом нельзя изменить по qty — только удалить --}}
+                                <div class="cart-item__qty-placeholder">× 1</div>
+
+                                <div class="cart-item__price">
+                                    <span class="cart-item__price-each">1 котёл</span>
+                                    <span class="cart-item__price-sum">{{ number_format($jam->price, 0, '.', ' ') }} ₽</span>
+                                </div>
+
+                                <button type="button" class="cart-item__remove"
+                                        data-cart-action="remove-custom"
+                                        aria-label="Убрать из мешочка" title="Убрать">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 6L18 18M18 6L6 18"/>
+                                    </svg>
+                                </button>
+                            </article>
+                        @endforeach
+                    </div>
+                @endif
+
                 {{-- Правая: сводка и кнопка checkout --}}
                 <aside class="cart-summary" id="cart-summary">
                     <h2 class="cart-summary__title">Что выходит</h2>
 
                     <div class="cart-summary__row">
                         <span>За банки</span>
-                        <strong data-summary-subtotal>{{ number_format($subtotal, 0, '.', ' ') }} ₽</strong>
+                        <strong data-summary-subtotal>{{ number_format($subtotal + (isset($customItems) ? $customItems->sum('subtotal') : 0), 0, '.', ' ') }} ₽</strong>
                     </div>
 
                     <div class="cart-summary__row cart-summary__row--hint">
                         <span>Доставка</span>
                         <em>
-                            @if($subtotal >= 3000)
+                            @php $fullSubtotal = $subtotal + (isset($customItems) ? $customItems->sum('subtotal') : 0); @endphp
+                            @if($fullSubtotal >= 3000)
                                 бесплатно (от 3 000 ₽)
                             @else
                                 посчитаем дальше

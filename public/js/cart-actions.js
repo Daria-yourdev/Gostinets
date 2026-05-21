@@ -12,7 +12,10 @@
 (function () {
     'use strict';
 
-    const ENDPOINT = '/cart/add';
+    // Базовый URL берём из мета-тега — работает и на localhost:8000,
+    // и на localhost/gostinets/, и на любом другом домене
+    const BASE     = (document.querySelector('meta[name="base-url"]')?.content || '').replace(/\/$/, '');
+    const ENDPOINT = BASE + '/cart/add';
 
     /* ============================================================
        Глобальный делегированный клик

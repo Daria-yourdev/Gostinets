@@ -30,6 +30,8 @@ Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.u
 Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
+Route::delete('/cart/custom/{customJam}', [CartController::class, 'destroyCustom'])->name('cart.custom.destroy');
+
 /* ============== ОФОРМЛЕНИЕ ЗАКАЗА ============== */
 Route::get('/checkout',                 [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout',                 [CheckoutController::class, 'store'])->name('checkout.store');
@@ -66,8 +68,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 /* ============== КАБИНЕТ ПОЛЬЗОВАТЕЛЯ ============== */
 Route::middleware('auth')->group(function () {
-    Route::view('/account', 'account.index')->name('account');
-    Route::view('/orders',  'account.orders')->name('orders');
+    Route::get('/account', [\App\Http\Controllers\AccountController::class, 'index'])->name('account');
+    Route::get('/orders',  [\App\Http\Controllers\AccountController::class, 'orders'])->name('orders');
 });
 
 
@@ -75,5 +77,27 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')->name('admin.')
     ->group(function () {
-        Route::view('/', 'admin.dashboard')->name('dashboard');
+
+        // Обзор / дашборд
+        Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+            ->name('dashboard');
+
+        // Заказы
+        Route::get   ('orders',                [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get   ('orders/{order}',        [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+        Route::patch ('orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.status');
+
+        // Товары — полный CRUD
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)
+            ->except(['show']);
+
+        // Кастомные варенья (котлы)
+        Route::get  ('custom-jams',                     [\App\Http\Controllers\Admin\CustomJamController::class, 'index'])->name('custom-jams.index');
+        Route::get  ('custom-jams/{customJam}',         [\App\Http\Controllers\Admin\CustomJamController::class, 'show'])->name('custom-jams.show');
+        Route::patch('custom-jams/{customJam}/status',  [\App\Http\Controllers\Admin\CustomJamController::class, 'updateStatus'])->name('custom-jams.status');
+
+        // Пользователи
+        Route::get  ('users',             [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::get  ('users/{user}',      [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('users.show');
+        Route::patch('users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.role');
     });

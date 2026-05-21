@@ -218,7 +218,7 @@
 
 .cart-item__name {
     margin: 0 0 4px;
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 18px;
     line-height: 1.2;
     color: var(--ink);
@@ -284,7 +284,7 @@
     height: 36px;
     display: grid;
     place-items: center;
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 16px;
     color: var(--ink);
     border-left: 1.5px solid var(--ink);
@@ -316,7 +316,7 @@
 }
 
 .cart-item__price-sum {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 20px;
     color: var(--ink);
 }
@@ -361,7 +361,7 @@
 }
 
 .cart-summary__title {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 24px;
     color: var(--burgundy);
     margin: 0 0 18px;
@@ -415,7 +415,7 @@
 }
 
 .cart-summary__total strong {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 34px;
     color: var(--burgundy);
 }
@@ -565,4 +565,75 @@
     .cart-head__sub {
         font-size: 14px;
     }
+}
+
+/* ===========================================================
+   ГЛОБАЛЬНЫЙ ТОСТ ОШИБКИ (создаётся cart-actions.js)
+   =========================================================== */
+.cart-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 22px;
+    border: 1.5px solid var(--burgundy);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    box-shadow: 4px 4px 0 var(--burgundy);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+    max-width: 90vw;
+}
+
+.cart-toast.--show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/* ===========================================================
+   КАСТОМНЫЕ ВАРЕНЬЯ В КОРЗИНЕ
+   =========================================================== */
+.cart-list--customs {
+    margin-top: 14px;
+}
+
+.cart-list__section-title {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--burgundy);
+    margin: 0 0 12px;
+    font-weight: normal;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(26, 22, 20, 0.2);
+}
+
+.cart-item--custom {
+    background: rgba(201, 169, 97, 0.05);
+    border-color: var(--gold);
+}
+
+.cart-item__visual--custom {
+    background: var(--paper);
+    display: grid;
+    place-items: center;
+}
+
+.cart-item__visual--custom svg {
+    width: 40px;
+    height: 48px;
+}
+
+.cart-item__qty-placeholder {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-2);
+    opacity: 0.55;
+    text-align: center;
+    padding: 0 8px;
 }

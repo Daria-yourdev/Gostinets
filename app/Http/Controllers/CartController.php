@@ -15,9 +15,10 @@ class CartController extends Controller
     public function index()
     {
         return view('cart', [
-            'items'    => $this->cart->items(),
-            'subtotal' => $this->cart->subtotal(),
-            'count'    => $this->cart->count(),
+            'items'       => $this->cart->items(),
+            'customItems' => $this->cart->customItems(),
+            'subtotal'    => $this->cart->subtotal(),
+            'count'       => $this->cart->count(),
         ]);
     }
 
@@ -68,6 +69,21 @@ class CartController extends Controller
     public function destroy(int $productId)
     {
         $this->cart->remove($productId);
+
+        return response()->json([
+            'ok'       => true,
+            'count'    => $this->cart->count(),
+            'subtotal' => $this->cart->subtotal(),
+            'empty'    => $this->cart->isEmpty(),
+        ]);
+    }
+
+    /**
+     * DELETE /cart/custom/{customJam} — удалить кастомный котёл (AJAX)
+     */
+    public function destroyCustom(int $customJamId)
+    {
+        $this->cart->removeCustom($customJamId);
 
         return response()->json([
             'ok'       => true,

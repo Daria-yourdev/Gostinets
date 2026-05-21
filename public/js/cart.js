@@ -9,6 +9,7 @@
     'use strict';
 
     const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
+    const BASE = (document.querySelector('meta[name="base-url"]')?.content || '').replace(/\/$/, '');
 
     /* ============================================================
        Утилиты для AJAX
@@ -108,7 +109,7 @@
 
         // AJAX
         try {
-            const json = await api(`/cart/${productId}`, 'PATCH', { qty: newQty });
+            const json = await api(`${BASE}/cart/${productId}`, 'PATCH', { qty: newQty });
             if (!json.ok) throw new Error('server');
 
             // Если сервер вернул меньше (например, не хватило на складе) — корректируем
@@ -137,7 +138,7 @@
         itemEl.classList.add('--removing');
 
         try {
-            const json = await api(`/cart/${productId}`, 'DELETE');
+            const json = await api(`${BASE}/cart/${productId}`, 'DELETE');
 
             // Анимация удаления → реальное удаление из DOM
             setTimeout(() => {
@@ -168,9 +169,33 @@
         if (!item) return;
 
         const type = action.dataset.cartAction;
-        if (type === 'plus')   changeQty(item, +1);
-        if (type === 'minus')  changeQty(item, -1);
-        if (type === 'remove') removeItem(item);
+        if (type === 'plus')          changeQty(item, +1);
+        if (type === 'minus')         changeQty(item, -1);
+        if (type === 'remove')        removeItem(item);
+        if (type === 'remove-custom') removeCustomItem(item);
     });
+
+    /* ============================================================
+       Удаление кастомного варенья
+    ============================================================ */
+    async function removeCustomItem(itemEl) {
+        const customId = itemEl.dataset.customId;
+        itemEl.classList.add('--removing');
+
+        try {
+            const json = await api(`${BASE}/cart/custom/${customId}`, 'DELETE');
+
+            setTimeout(() => {
+                itemEl.remove();
+                updateHeaderCounter(json.count);
+                updateSubtotal(json.subtotal);
+                if (json.empty) window.location.reload();
+            }, 280);
+
+        } catch (err) {
+            console.error('[cart] remove-custom failed:', err);
+            itemEl.classList.remove('--removing');
+        }
+    }
 
 })();

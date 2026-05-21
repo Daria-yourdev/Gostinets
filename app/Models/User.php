@@ -81,11 +81,16 @@ class User extends Authenticatable
     }
 
     /* ===========================================================
-       СВЯЗИ (заготовки — добавить, когда появятся модели)
+       СВЯЗИ
        =========================================================== */
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(\App\Models\Order::class);
-    // }
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Order::class);
+    }
+
+    public function customJams(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\CustomJam::class);
+    }
 }
