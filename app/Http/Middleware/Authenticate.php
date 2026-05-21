@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 class Authenticate extends Middleware
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+     * Куда редиректить гостя при попытке зайти на защищённую страницу.
+     * Поскольку /login — это POST (форма в модалке), редиректим
+     * на главную с параметром, который откроет auth-модалку.
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        return $request->expectsJson() ? null : url('/?auth=login');
     }
 }

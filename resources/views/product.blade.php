@@ -184,7 +184,7 @@
                 @else
                 {{-- Нет в наличии — предложить подписку или похожее --}}
                 <div class="product-info__nostock">
-                    <p>Пока нет, но Дарина варит по расписанию.</p>
+                    <p>Пока нет, но Мария варит по расписанию.</p>
                     <a href="{{ route('catalog') }}" class="btn-ghost">
                         Другие банки в кладовой →
                     </a>
@@ -270,7 +270,7 @@
                     {!! nl2br(e($product->description)) !!}
                 </div>
                 @else
-                <p class="product-tabs__empty">Дарина ещё не написала сказ об этой банке.</p>
+                <p class="product-tabs__empty">Мария ещё не написала сказ об этой банке.</p>
                 @endif
             </div>
 

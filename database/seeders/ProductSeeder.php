@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         // Очистим, чтобы переcидить без дублей
-        Product::truncate();
+        /* Product::truncate(); */
 
         $items = [
             // ======================== ВИШНЯ ========================

@@ -39,7 +39,7 @@ class CheckoutController extends Controller
         $items       = $this->cart->items();
         $customItems = $this->cart->customItems();
         $subtotal    = $this->cart->subtotal()
-                     + $customItems->sum('subtotal');
+            + $customItems->sum('subtotal');
 
         return view('checkout.index', [
             'items'           => $items,
@@ -83,7 +83,20 @@ class CheckoutController extends Controller
         // Снапшот корзины и сумм
         $items       = $this->cart->items();
         $customItems = $this->cart->customItems();
-        $subtotal    = $this->cart->subtotal() + $customItems->sum('subtotal');
+
+        foreach ($items as $row) {
+            if ($row['qty'] > $row['product']->stock) {
+                return back()
+                    ->withInput()
+                    ->with(
+                        'flash-error',
+                        "На складе осталось только {$row['product']->stock} банок «{$row['product']->name}». Уменьши количество."
+                    );
+            }
+        }
+
+        $subtotal = $this->cart->subtotal() + $customItems->sum('subtotal');
+        
         $delivery    = $this->cart->deliveryCost($data['delivery_method']);
         $total       = $subtotal + $delivery;
 
@@ -134,6 +147,10 @@ class CheckoutController extends Controller
             return $order;
         });
 
+        $this->rememberOrder($order);  // ← ДОБАВИТЬ
+
+        $confirmationUrl = $this->yookassa->createPayment($order);
+
         // Создаём платёж в ЮКассе
         $confirmationUrl = $this->yookassa->createPayment($order);
 
@@ -168,11 +185,20 @@ class CheckoutController extends Controller
 
             // Если оплата успешна — обновляем заказ (если webhook ещё не прилетел)
             if ($status === 'succeeded' && !$order->isPaid()) {
-                $order->update([
-                    'status'          => 'paid',
-                    'yookassa_status' => 'succeeded',
-                    'paid_at'         => now(),
-                ]);
+                DB::transaction(function () use ($order) {
+                    $order->update([
+                        'status'          => 'paid',
+                        'yookassa_status' => 'succeeded',
+                        'paid_at'         => now(),
+                    ]);
+                    foreach ($order->items as $item) {
+                        if ($item->product_id) {
+                            \App\Models\Product::where('id', $item->product_id)
+                                ->where('stock', '>=', $item->qty)
+                                ->decrement('stock', $item->qty);
+                        }
+                    }
+                });
             }
 
             if ($status === 'canceled' && !$order->isCanceled()) {
@@ -226,13 +252,23 @@ class CheckoutController extends Controller
     private function ensureCanView(Order $order): void
     {
         // Авторизованный — должен быть владельцем
-        if (auth()->check() && $order->user_id === auth()->id()) return;
+        if (auth()->check() && $order->user_id === auth()->id()) {
+            return;
+        }
 
         // Гость — должен иметь ID этого заказа в сессии
         $recent = session('recent_orders', []);
-        if (in_array($order->id, $recent, true)) return;
+        if (in_array($order->id, $recent, true)) {
+            return;
+        }
 
-        // Сохраняем в сессию при первом просмотре после оплаты
+        // Не наше — заворачиваем
+        abort(403, 'Этот заказ не твой.');
+    }
+
+    private function rememberOrder(Order $order): void
+    {
+        $recent   = session('recent_orders', []);
         $recent[] = $order->id;
         session(['recent_orders' => array_slice(array_unique($recent), -10)]);
     }

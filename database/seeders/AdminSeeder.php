@@ -18,24 +18,27 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        // updateOrCreate, чтобы можно было переcидить без дублей
+        $adminPassword = env('ADMIN_SEED_PASSWORD', \Illuminate\Support\Str::random(16));
+
         User::updateOrCreate(
             ['email' => 'admin@gostinec.ru'],
             [
-                'name'     => 'Дарина',
-                'password' => 'admin123', // автоматически хешируется (cast 'hashed')
-                'role'     => User::ROLE_ADMIN,
+                'name'     => 'Хозяйка',
+                'password' => $adminPassword,
+                'role'     => 'admin',
             ]
         );
 
-        // Тестовый обычный пользователь — удобно для проверки разграничения
-        User::updateOrCreate(
-            ['email' => 'guest@gostinec.ru'],
-            [
-                'name'     => 'Иван Гость',
-                'password' => 'guest123',
-                'role'     => User::ROLE_USER,
-            ]
-        );
+        if (app()->environment('local')) {
+            $this->command->info("Admin: admin@gostinec.ru / {$adminPassword}");
+        }
+
+        // Тестовый гость — только в local
+        if (app()->environment('local')) {
+            User::updateOrCreate(
+                ['email' => 'guest@gostinec.ru'],
+                ['name' => 'Гость', 'password' => 'guest123', 'role' => 'user']
+            );
+        }
     }
 }

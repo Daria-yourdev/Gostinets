@@ -40,7 +40,7 @@
                         <circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.2" />
                     </svg>
                     <span class="top-bar__loc-text">
-                        Доставка в: <strong id="user-city">Республика Татарстан</strong>
+                        Доставка в: <strong id="user-city">Казань</strong>
                     </span>
                     <button type="button" class="top-bar__city-btn" id="change-city-btn">
                         Изменить город
@@ -133,7 +133,7 @@
                             </svg>
                             <span class="action__count">{{ app(\App\Services\CartService::class)->count() }}</span>
                         </span>
-                        <span class="action__label">Запасы</span>
+                        <span class="action__label">Мешочек</span>
                     </a>
 
                     @auth
@@ -248,7 +248,7 @@
             <h3 id="city-modal-title">Выберите ваш город</h3>
             <p>Это поможет рассчитать стоимость и сроки доставки.</p>
             <div class="city-modal__list">
-                <button type="button" class="city-modal__item" data-city="Республика Татарстан">
+                <button type="button" class="city-modal__item" data-city="Казань">
                     Казань <small>по умолчанию</small>
                 </button>
                 <button type="button" class="city-modal__item" data-city="Москва">Москва</button>
@@ -345,7 +345,7 @@
                     <a href="#">Политика конфиденциальности</a>
                     <a href="#">Договор оферты</a>
                 </div>
-                <span>дипломный проект · Пирогова Д. Д.</span>
+                <!-- <span>дипломный проект · Пирогова Д. Д.</span> -->
             </div>
         </div>
     </footer>
@@ -439,7 +439,7 @@
                 @csrf
                 <div class="auth-modal__head">
                     <h3>Гостевая грамота</h3>
-                    <p>впиши имя в книгу — и Дарина приготовит банку</p>
+                    <p>впиши имя в книгу — и Мария приготовит банку</p>
                 </div>
 
                 <label class="auth-field">

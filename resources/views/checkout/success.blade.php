@@ -22,12 +22,12 @@
 
             <span class="checkout-result__kicker">расплатились</span>
             <h1 class="checkout-result__title">
-                Готово.<br>Дарина <em>разжигает огонь</em>.
+                Готово.<br>Пора <em>разжигать огонь!</em>.
             </h1>
 
             <p class="checkout-result__lede">
                 Заказ <strong>{{ $order->number }}</strong> принят.<br>
-                Сначала Дарина сварит, потом упакует — и отправит выбранной службой.
+                Сначала Мария сварит, потом упакует — и отправит выбранной службой.
                 На каждом шаге пришлём весточку на <strong>{{ $order->contact_email }}</strong>.
             </p>
 

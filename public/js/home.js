@@ -62,7 +62,7 @@
     const citySave = document.getElementById('city-modal-save');
     const cityInput = document.getElementById('city-modal-input');
     const cityItems = document.querySelectorAll('.city-modal__item');
-    const DEFAULT_CITY = 'Республика Татарстан';
+    const DEFAULT_CITY = 'Казань';
 
     function getSavedCity() {
         try { return localStorage.getItem('gostinets-city'); } catch (e) { return null; }

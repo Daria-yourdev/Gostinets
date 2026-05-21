@@ -21,6 +21,8 @@ class AccountController extends Controller
      */
     public function orders()
     {
+        abort_unless(auth()->check(), 403);
+
         $orders = Order::where('user_id', auth()->id())
             ->with('items')
             ->orderByDesc('created_at')

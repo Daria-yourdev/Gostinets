@@ -7,6 +7,12 @@
 (function () {
     'use strict';
 
+    if (new URLSearchParams(window.location.search).get('auth') === 'login') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof openAuthModal === 'function') openAuthModal('login');
+        });
+    }
+
     /* ============================================================
        0. CSRF
        ============================================================ */
@@ -101,7 +107,7 @@
         if (!wrap) return;
         wrap.classList.add('--invalid');
         const errEl = wrap.querySelector('[data-error="' + name + '"]')
-                   || wrap.querySelector('.auth-field__error');
+            || wrap.querySelector('.auth-field__error');
         if (errEl) errEl.textContent = message;
     }
 

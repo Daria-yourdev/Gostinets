@@ -28,14 +28,25 @@ use YooKassa\Model\Notification\NotificationCanceled;
 class YooKassaService
 {
     private Client $client;
+    private bool $configured;
 
     public function __construct()
     {
+        $shopId    = config('services.yookassa.shop_id');
+        $secretKey = config('services.yookassa.secret_key');
+
+        // Если конфиг не задан — клиент работает «вхолостую»
+        // и при попытке оплаты вернёт null с понятной ошибкой
+        $this->configured = !empty($shopId) && !empty($secretKey);
+
         $this->client = new Client();
-        $this->client->setAuth(
-            (string) config('services.yookassa.shop_id'),
-            (string) config('services.yookassa.secret_key'),
-        );
+
+        if ($this->configured) {
+            $this->client->setAuth(
+                (int) $shopId,           // ← было (string), теперь (int) — SDK требует int
+                (string) $secretKey,
+            );
+        }
     }
 
     /**
@@ -44,6 +55,11 @@ class YooKassaService
      */
     public function createPayment(Order $order): ?string
     {
+        if (!$this->configured) {
+            Log::error('YooKassa не настроена: проверь YOOKASSA_SHOP_ID и YOOKASSA_SECRET_KEY в .env');
+            return null;
+        }
+
         try {
             $idempotenceKey = uniqid('gostinec_' . $order->id . '_', true);
 
@@ -79,7 +95,6 @@ class YooKassaService
             ]);
 
             return $payment->getConfirmation()->getConfirmationUrl();
-
         } catch (\Throwable $e) {
             Log::error('YooKassa createPayment failed', [
                 'order_id' => $order->id,
@@ -127,12 +142,26 @@ class YooKassaService
 
             // Обновляем по типу события
             if ($notification instanceof NotificationSucceeded) {
-                $order->update([
-                    'status'           => 'paid',
-                    'yookassa_status'  => 'succeeded',
-                    'yookassa_payload' => $payload,
-                    'paid_at'          => now(),
-                ]);
+ 
+                // Меняем статус и уменьшаем остатки в транзакции
+                \DB::transaction(function () use ($order, $payload) {
+                    $order->update([
+                        'status'           => 'paid',
+                        'yookassa_status'  => 'succeeded',
+                        'yookassa_payload' => $payload,
+                        'paid_at'          => now(),
+                    ]);
+ 
+                    // Уменьшаем stock у каждого товара в заказе
+                    foreach ($order->items as $item) {
+                        if ($item->product_id) {
+                            \App\Models\Product::where('id', $item->product_id)
+                                ->where('stock', '>=', $item->qty)
+                                ->decrement('stock', $item->qty);
+                        }
+                    }
+                });
+ 
                 return true;
             }
 
@@ -152,7 +181,6 @@ class YooKassaService
                 'yookassa_payload' => $payload,
             ]);
             return true;
-
         } catch (\Throwable $e) {
             Log::error('YooKassa webhook error', [
                 'error'   => $e->getMessage(),

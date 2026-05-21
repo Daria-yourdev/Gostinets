@@ -20,8 +20,8 @@ class ProductController extends Controller
             $q = $request->q;
             $query->where(function ($w) use ($q) {
                 $w->where('name', 'like', "%{$q}%")
-                  ->orWhere('slug', 'like', "%{$q}%")
-                  ->orWhere('subtitle', 'like', "%{$q}%");
+                    ->orWhere('slug', 'like', "%{$q}%")
+                    ->orWhere('subtitle', 'like', "%{$q}%");
             });
         }
 
@@ -131,10 +131,15 @@ class ProductController extends Controller
             'description'       => ['nullable', 'string', 'max:5000'],
             'berry_type'        => ['required', 'in:' . implode(',', array_keys(Product::BERRIES))],
             'mood'              => ['required', 'in:' . implode(',', array_keys(Product::MOODS))],
-            'price'             => ['required', 'integer', 'min:0', 'max:99999'],
+            'price' => ['required', 'integer', 'min:1', 'max:99999'],
             'weight'            => ['required', 'integer', 'min:1', 'max:9999'],
             'jam_color'         => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'image_path'        => ['nullable', 'string', 'max:200'],
+            'image_path' => [
+                'nullable',
+                'string',
+                'max:200',
+                'regex:/^media\/[a-z0-9_\-\/.]+\.(png|jpg|jpeg|webp)$/i',
+            ],
             'badge'             => ['nullable', 'in:' . implode(',', array_keys(Product::BADGES))],
             'is_sugar_free'     => ['nullable', 'boolean'],
             'is_gift'           => ['nullable', 'boolean'],
@@ -145,6 +150,7 @@ class ProductController extends Controller
             'berry_type.required' => 'Из чего варено?',
             'mood.required'       => 'Какое у банки настроение?',
             'price.required'      => 'Цена обязательна.',
+            'image_path.regex' => 'Путь должен быть вида media/catalog/имя.png',
         ]) + [
             'is_sugar_free' => $r->boolean('is_sugar_free'),
             'is_gift'       => $r->boolean('is_gift'),
