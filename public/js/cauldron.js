@@ -17,22 +17,22 @@
     if (!form) return;
 
     const priceMap = JSON.parse(root.dataset.priceMap || '{}');
-    const canCook  = root.dataset.canCook === '1';
+    const canCook = root.dataset.canCook === '1';
     const STORE_KEY = 'gostinets_cauldron_v2';
 
     /* ----------------------------------------------------------
        DOM
     ---------------------------------------------------------- */
     const dom = {
-        priceValue:  document.getElementById('cauldron-price-value'),
+        priceValue: document.getElementById('cauldron-price-value'),
         priceEchoes: document.querySelectorAll('[data-price-display]'),
-        liquid:      document.getElementById('cauldron-liquid'),
-        drops:       document.getElementById('cauldron-drops'),
-        labelName:   document.getElementById('cauldron-label-name'),
-        labelDesc:   document.getElementById('cauldron-label-desc'),
-        labelSize:   document.getElementById('cauldron-label-size'),
-        steps:       document.querySelectorAll('.cauldron-step'),
-        flash:       document.querySelector('[data-flash]'),
+        liquid: document.getElementById('cauldron-liquid'),
+        drops: document.getElementById('cauldron-drops'),
+        labelName: document.getElementById('cauldron-label-name'),
+        labelDesc: document.getElementById('cauldron-label-desc'),
+        labelSize: document.getElementById('cauldron-label-size'),
+        steps: document.querySelectorAll('.cauldron-step'),
+        flash: document.querySelector('[data-flash]'),
     };
 
     /* ============================================================
@@ -41,14 +41,14 @@
     function readPayload() {
         const fd = new FormData(form);
         return {
-            label_name:  (fd.get('label_name')  || '').toString().trim(),
-            berry_main:   fd.get('berry_main')   || null,
+            label_name: (fd.get('label_name') || '').toString().trim(),
+            berry_main: fd.get('berry_main') || null,
             berry_extras: fd.getAll('berry_extras[]'),
-            spices:       fd.getAll('spices[]'),
-            sweetener:   (fd.get('sweetener')    || 'sugar').toString(),
+            spices: fd.getAll('spices[]'),
+            sweetener: (fd.get('sweetener') || 'sugar').toString(),
             jar_size: parseInt(fd.get('jar_size'), 10) || 250,
-            dedication:  (fd.get('dedication')   || '').toString().trim(),
-            whisper:     (fd.get('whisper')      || '').toString().trim(),
+            dedication: (fd.get('dedication') || '').toString().trim(),
+            whisper: (fd.get('whisper') || '').toString().trim(),
         };
     }
 
@@ -134,16 +134,16 @@
        5. ВИЗУАЛ КОТЛА
     ============================================================ */
     const BERRY_COLORS = {
-        vishnya:  '#7E1A1A',
-        malina:   '#6B1818',
+        vishnya: '#7E1A1A',
+        malina: '#6B1818',
         ezhevika: '#2E1414',
-        limon:    '#C9A961',
-        abrikos:  '#D4A24C',
+        limon: '#C9A961',
+        abrikos: '#D4A24C',
         klubnika: '#A02020',
-        klukva:   '#8B1520',   // клюква — тёмно-малиновый
-        grusha:   '#8B9A2C',   // груша — зеленоватый
-        yabloko:  '#B52020',   // яблоко — красный
-        shishka:  '#5C3B1F',   // шишка — смолистый коричневый
+        klukva: '#8B1520',   // клюква — тёмно-малиновый
+        grusha: '#8B9A2C',   // груша — зеленоватый
+        yabloko: '#B52020',   // яблоко — красный
+        shishka: '#5C3B1F',   // шишка — смолистый коричневый
     };
 
     const BERRY_LABELS = {
@@ -182,8 +182,10 @@
             if (data.berry_main) parts.push(BERRY_LABELS[data.berry_main] || data.berry_main);
             parts.push(...data.berry_extras.map(x => BERRY_LABELS[x] || x));
             if (data.spices.length) {
-                const sm = { ginger:'имбирь', cinnamon:'корица', vanilla:'ваниль',
-                             cardamom:'кардамон', mint:'мята', lemon_zest:'цедра' };
+                const sm = {
+                    ginger: 'имбирь', cinnamon: 'корица', vanilla: 'ваниль',
+                    cardamom: 'кардамон', mint: 'мята', lemon_zest: 'цедра'
+                };
                 parts.push('· ' + data.spices.map(x => sm[x] || x).join(', '));
             }
             dom.labelDesc.textContent = parts.length ? parts.join(', ') : 'собери в котле слева';
@@ -210,11 +212,11 @@
        8. СОХРАНЕНИЕ В localStorage
     ============================================================ */
     function saveState(data) {
-        try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (_) {}
+        try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (_) { }
     }
 
     function clearState() {
-        try { localStorage.removeItem(STORE_KEY); } catch (_) {}
+        try { localStorage.removeItem(STORE_KEY); } catch (_) { }
     }
 
     function restoreState() {
@@ -353,9 +355,9 @@
                 const fd = new FormData(form);
                 fd.set('action', action);
                 const csrf = document.querySelector('meta[name="csrf-token"]')?.content
-                           || form.querySelector('input[name="_token"]')?.value;
+                    || form.querySelector('input[name="_token"]')?.value;
 
-                const res = await fetch(form.action, {
+                const res = await fetch(form.getAttribute('action'), {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

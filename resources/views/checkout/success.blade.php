@@ -10,13 +10,13 @@
         <div class="checkout-result__inner">
             <div class="checkout-result__seal" aria-hidden="true">
                 <svg viewBox="0 0 120 120" fill="none">
-                    <circle cx="60" cy="60" r="56" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
-                    <circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="1" opacity="0.55"/>
-                    <circle cx="60" cy="60" r="34" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="60" cy="60" r="56" stroke="currentColor" stroke-width="0.8" opacity="0.3" />
+                    <circle cx="60" cy="60" r="46" stroke="currentColor" stroke-width="1" opacity="0.55" />
+                    <circle cx="60" cy="60" r="34" stroke="currentColor" stroke-width="2" />
                     <path d="M44 60 L55 71 L78 48" stroke="currentColor" stroke-width="3"
-                          stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        stroke-linecap="round" stroke-linejoin="round" fill="none" />
                     <text x="60" y="98" text-anchor="middle" font-family="JetBrains Mono"
-                          font-size="6" letter-spacing="1.4" fill="currentColor" stroke="none">ОПЛАЧЕНО</text>
+                        font-size="6" letter-spacing="1.4" fill="currentColor" stroke="none">ОПЛАЧЕНО</text>
                 </svg>
             </div>
 
@@ -57,13 +57,13 @@
 
             <div class="checkout-result__actions">
                 @auth
-                    <a href="{{ route('orders') }}" class="btn-primary">
-                        <span>Мои заказы</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" aria-hidden="true">
-                            <path d="M5 12h14M13 6l6 6-6 6"/>
-                        </svg>
-                    </a>
+                <a href="{{ route('orders') }}" class="btn-primary">
+                    <span>Мои заказы</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                </a>
                 @endauth
                 <a href="{{ route('catalog') }}" class="btn-ghost">
                     В кладовую за новым
@@ -71,7 +71,7 @@
             </div>
 
             <p class="checkout-result__hint">
-                Если что-то не так — напиши Дарине: <a href="mailto:hello@gostinec.ru">hello@gostinec.ru</a>
+                Если что-то не так — напиши Марие: <a href="mailto:hello@gostinec.ru">maria@gostinets.ru</a>
             </p>
         </div>
     </div>
