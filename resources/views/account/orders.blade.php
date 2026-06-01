@@ -58,7 +58,7 @@
                         @foreach($o->items as $item)
                         <li class="account-order__item">
                             <div class="account-order__item-img">
-                                <img src="{{ asset($item->product_image ?: 'media/catalog/catalog-card-1.png') }}"
+                                <img src="{{ asset($item->product_image ?: 'media/cotel/kastom_card.jpg') }}"
                                     alt="{{ $item->product_name }}" loading="lazy">
                             </div>
                             <div class="account-order__item-info">

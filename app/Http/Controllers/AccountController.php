@@ -35,4 +35,25 @@ class AccountController extends Controller
 
         return view('account.orders', compact('orders', 'jams'));
     }
+
+    public function profile()
+    {
+        return view('account.profile', ['user' => auth()->user()]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $data = $request->validate([
+            'name'             => ['required', 'string', 'max:60'],
+            'phone'            => ['nullable', 'string', 'max:20'],
+            'delivery_city'    => ['nullable', 'string', 'max:80'],
+            'delivery_zip'     => ['nullable', 'string', 'max:10'],
+            'delivery_address' => ['nullable', 'string', 'max:250'],
+            'delivery_note'    => ['nullable', 'string', 'max:250'],
+        ]);
+
+        auth()->user()->update($data);
+
+        return back()->with('flash', 'Данные сохранены.');
+    }
 }

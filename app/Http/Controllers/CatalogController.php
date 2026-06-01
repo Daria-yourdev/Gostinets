@@ -30,7 +30,7 @@ class CatalogController extends Controller
         $priceMax = $this->asInt($request->query('price_max'));
         $sugarFree = $request->boolean('sugar_free');
         $giftOnly  = $request->boolean('gift');
-        $sort     = (string) $request->query('sort', 'popular');
+        $sort     = (string) $request->query('sort', 'season');
 
         // --- собираем запрос через scope-ы модели ----------------------------
         $query = Product::query()

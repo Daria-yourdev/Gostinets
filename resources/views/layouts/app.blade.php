@@ -40,10 +40,10 @@
                         <circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.2" />
                     </svg>
                     <span class="top-bar__loc-text">
-                        Доставка в: <strong id="user-city">Казань</strong>
+                        Доставка: <strong id="user-city">По России</strong>
                     </span>
                     <button type="button" class="top-bar__city-btn" id="change-city-btn">
-                        Изменить город
+                        Изменить способ доставки
                     </button>
                 </div>
                 <nav class="top-bar__nav" aria-label="Социальные сети">
@@ -181,14 +181,14 @@
                                 @endif
                             </div>
 
-                            <!-- <a href="{{ route('account') }}" class="user-menu__item" role="menuitem">
+                            <a href="{{ route('profile') }}" class="user-menu__item" role="menuitem">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <circle cx="12" cy="9" r="4" />
                                     <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" />
                                 </svg>
                                 Личное
-                            </a> -->
+                            </a>
                             <a href="{{ route('orders') }}" class="user-menu__item" role="menuitem">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -240,8 +240,94 @@
         </header>
     </div>
 
+    {{-- ====================== МОДАЛКА ВЫБОРА СПОСОБА ДОСТАВКИ ====================== --}}
+    <div class="delivery-modal" id="delivery-modal" hidden role="dialog" aria-modal="true" aria-labelledby="delivery-modal-title">
+        <div class="delivery-modal__overlay" id="delivery-modal-overlay"></div>
+        <div class="delivery-modal__inner">
+            <button type="button" class="delivery-modal__close" id="delivery-modal-close" aria-label="Закрыть">×</button>
+
+            <h3 id="delivery-modal-title">Куда нести гостинец?</h3>
+            <p class="delivery-modal__hint">Выбери, как удобнее. Это сохранится — при оформлении заказа подставим автоматически.</p>
+
+            <div class="delivery-modal__list">
+                {{-- 1. По России --}}
+                <button type="button" class="delivery-option" data-mode="russia" data-method="cdek">
+                    <div class="delivery-option__head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 7l9-4 9 4M3 7v10l9 4 9-4V7M3 7l9 4M21 7l-9 4M12 11v10" />
+                        </svg>
+                        <div>
+                            <strong>По России</strong>
+                            <span>СДЭК или Почта России · 350–250 ₽</span>
+                        </div>
+                    </div>
+                    <div class="delivery-option__sub">
+                        <label class="delivery-suboption">
+                            <input type="radio" name="russia-method" value="cdek" checked>
+                            <span><strong>СДЭК</strong> — 350 ₽ · 3–7 дней</span>
+                        </label>
+                        <label class="delivery-suboption">
+                            <input type="radio" name="russia-method" value="post">
+                            <span><strong>Почта России</strong> — 250 ₽ · 7–21 день</span>
+                        </label>
+                    </div>
+                </button>
+
+                {{-- 2. Самовывоз Казань --}}
+                <button type="button" class="delivery-option" data-mode="pickup">
+                    <div class="delivery-option__head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <div>
+                            <strong>Самовывоз</strong>
+                            <span>Казань · бесплатно</span>
+                        </div>
+                    </div>
+                    <div class="delivery-option__sub">
+                        <p class="delivery-suboption__text">
+                            Адрес: г. Казань, ул. Мавлютова, д. 15. Согласуем время по телефону после оплаты.
+                        </p>
+                    </div>
+                </button>
+
+                {{-- 3. В подарок --}}
+                <button type="button" class="delivery-option" data-mode="gift" data-method="cdek">
+                    <div class="delivery-option__head">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7" />
+                        </svg>
+                        <div>
+                            <strong>В подарок</strong>
+                            <span>Доставка или самовывоз — на выбор</span>
+                        </div>
+                    </div>
+                    <div class="delivery-option__sub">
+                        <label class="delivery-suboption">
+                            <input type="radio" name="gift-method" value="cdek" checked>
+                            <span><strong>СДЭК</strong> — 350 ₽</span>
+                        </label>
+                        <label class="delivery-suboption">
+                            <input type="radio" name="gift-method" value="post">
+                            <span><strong>Почта России</strong> — 250 ₽</span>
+                        </label>
+                        <label class="delivery-suboption">
+                            <input type="radio" name="gift-method" value="pickup">
+                            <span><strong>Самовывоз</strong> — Казань, бесплатно</span>
+                        </label>
+                    </div>
+                </button>
+            </div>
+
+            <button type="button" class="delivery-modal__save" id="delivery-modal-save">
+                Сохранить выбор
+            </button>
+        </div>
+    </div>
+
     {{-- CITY MODAL --}}
-    <div class="city-modal" id="city-modal" hidden role="dialog" aria-modal="true" aria-labelledby="city-modal-title">
+    <!-- <div class="city-modal" id="city-modal" hidden role="dialog" aria-modal="true" aria-labelledby="city-modal-title">
         <div class="city-modal__overlay" id="city-modal-overlay"></div>
         <div class="city-modal__inner">
             <button type="button" class="city-modal__close" id="city-modal-close" aria-label="Закрыть">×</button>
@@ -267,7 +353,7 @@
                 <button type="button" class="city-modal__save" id="city-modal-save">Сохранить</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     @yield('content')
 
@@ -306,11 +392,11 @@
                 <div class="footer__col">
                     <h4>Тропинки</h4>
                     <nav class="footer__nav">
-                        <a href="#banner">Начало</a>
+                        <a href="{{ route('home') }}#banner">Начало</a>
                         <a href="{{ route('catalog') }}">Закрома</a>
-                        <a href="#about">Сказ хозяйки</a>
-                        <a href="#questions">Вопросы</a>
-                        <a href="#oracle">Оракул ягод</a>
+                        <a href="{{ route('home') }}#about">Сказ хозяйки</a>
+                        <a href="{{ route('home') }}#questions">Вопросы</a>
+                        <a href="{{ route('home') }}#oracle">Оракул ягод</a>
                         <a href="{{ route('catalog') }}">Обрести банку</a>
                     </nav>
                 </div>
@@ -519,8 +605,10 @@
 
     <script src="{{ asset('js/home.js') }}" defer></script>
     <script src="{{ asset('js/auth.js') }}" defer></script>
+    <script src="{{ asset('js/form-masks.js') }}" defer></script>
     {{-- Корзина: глобальный обработчик [data-add-to-cart] — работает на ВСЕХ страницах --}}
     <script src="{{ asset('js/cart-actions.js') }}" defer></script>
+    <script src="{{ asset('js/delivery-modal.js') }}" defer></script>
 </body>
 
 </html>

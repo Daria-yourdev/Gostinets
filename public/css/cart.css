@@ -641,3 +641,91 @@
     text-align: center;
     padding: 0 8px;
 }
+
+/* Большой тост: «Положено в мешочек» */
+.cart-toast-big {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--paper);
+    border: 1.5px solid var(--burgundy);
+    box-shadow: 6px 6px 0 var(--burgundy);
+    padding: 16px 22px;
+    min-width: 320px;
+    max-width: 400px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+}
+
+.cart-toast-big.--show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.cart-toast-big__icon {
+    width: 36px;
+    height: 36px;
+    background: var(--moss);
+    color: var(--cream);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.cart-toast-big__icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.cart-toast-big__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-toast-big__title {
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.cart-toast-big__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-2);
+    opacity: 0.7;
+}
+
+.cart-toast-big__link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--burgundy);
+    text-decoration: none;
+    border: 1px solid var(--burgundy);
+    padding: 8px 12px;
+    transition: all 0.15s;
+}
+
+.cart-toast-big__link:hover {
+    background: var(--burgundy);
+    color: var(--cream);
+}
+
+@media (max-width: 640px) {
+    .cart-toast-big {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        min-width: 0;
+    }
+}

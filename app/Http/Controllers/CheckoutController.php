@@ -32,14 +32,27 @@ class CheckoutController extends Controller
     public function index()
     {
         if ($this->cart->isEmpty()) {
-            return redirect()->route('cart')
-                ->with('flash', 'Сначала положи что-нибудь в мешочек.');
+            return redirect()->route('cart')->with('flash', 'Сначала положи что-нибудь в мешочек.');
         }
 
         $items       = $this->cart->items();
         $customItems = $this->cart->customItems();
-        $subtotal    = $this->cart->subtotal()
-            + $customItems->sum('subtotal');
+        $subtotal    = $this->cart->subtotal() + $customItems->sum('subtotal');
+        $user        = auth()->user();
+
+        // Данные пользователя для автозаполнения формы
+        $defaults = [
+            'contact_name'     => $user?->name ?? '',
+            'contact_email'    => $user?->email ?? '',
+            'contact_phone'    => $user?->phone ?? '',
+            'delivery_city'    => $user?->delivery_city ?? '',
+            'delivery_zip'     => $user?->delivery_zip ?? '',
+            'delivery_address' => $user?->delivery_address ?? '',
+            'delivery_note'    => $user?->delivery_note ?? '',
+        ];
+
+        // Выбор из модалки доставки
+        $deliveryChoice = session('delivery_choice', ['mode' => 'russia', 'method' => 'cdek']);
 
         return view('checkout.index', [
             'items'           => $items,
@@ -47,7 +60,9 @@ class CheckoutController extends Controller
             'subtotal'        => $subtotal,
             'deliveryMethods' => Order::DELIVERY_METHODS,
             'freeShipFrom'    => 3000,
-            'user'            => auth()->user(),
+            'user'            => $user,
+            'defaults'        => $defaults,
+            'deliveryChoice'  => $deliveryChoice,
         ]);
     }
 
@@ -96,7 +111,7 @@ class CheckoutController extends Controller
         }
 
         $subtotal = $this->cart->subtotal() + $customItems->sum('subtotal');
-        
+
         $delivery    = $this->cart->deliveryCost($data['delivery_method']);
         $total       = $subtotal + $delivery;
 

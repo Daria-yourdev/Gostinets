@@ -188,7 +188,7 @@
                     <li><strong>Продавец:</strong> ИП Буреломова Мария Кощеевна</li>
                     <li><strong>ОГРНИП:</strong> 324160000012345</li>
                     <li><strong>ИНН:</strong> 160312345678</li>
-                    <li><strong>Адрес:</strong> 420012, Республика Татарстан, г. Казань, ул. Мавлютова, д. 15, кв. 7</li>
+                    <li><strong>Адрес:</strong> 420012, Республика Татарстан, г. Казань, ул. Мавлютова, д. 15</li>
                     <li><strong>Email:</strong> <a href="mailto:gost@gostinec.ru">gost@gostinec.ru</a></li>
                     <li><strong>Сайт:</strong> gostinets.ru</li>
                 </ul>

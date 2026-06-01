@@ -211,10 +211,10 @@
 .checkout-field__error {
     display: block;
     margin-top: 6px;
-    font-family: var(--serif);
+    font-family: var(--sans);
     font-style: italic;
     font-size: 13px;
-    color: var(--burgundy);
+    color:  rgb(181, 0, 0);
 }
 
 
@@ -470,7 +470,7 @@
 }
 
 .checkout-summary__title {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 24px;
     color: var(--burgundy);
     margin: 0 0 18px;
@@ -607,7 +607,7 @@
 }
 
 .checkout-summary__total strong {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 32px;
     color: var(--burgundy);
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CauldronController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\DeliveryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,12 +34,13 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart
 Route::delete('/cart/custom/{customJam}', [CartController::class, 'destroyCustom'])->name('cart.custom.destroy');
 
 /* ============== ОФОРМЛЕНИЕ ЗАКАЗА ============== */
-Route::get('/checkout',                 [CheckoutController::class, 'index'])->name('checkout');
-Route::post('/checkout',                 [CheckoutController::class, 'store'])->name('checkout.store');
-Route::get('/checkout/{order}/return',  [CheckoutController::class, 'return'])->name('checkout.return');
-Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('checkout.success');
-Route::get('/checkout/{order}/fail',    [CheckoutController::class, 'fail'])->name('checkout.fail');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout',                 [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout',                [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/{order}/return',  [CheckoutController::class, 'return'])->name('checkout.return');
+    Route::get('/checkout/{order}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::get('/checkout/{order}/fail',    [CheckoutController::class, 'fail'])->name('checkout.fail');
+});
 
 /* ============== WEBHOOK ЮКАССЫ ============== */
 // Этот URL надо прописать в личном кабинете ЮКассы.
@@ -70,6 +72,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::middleware('auth')->group(function () {
     Route::get('/account', [\App\Http\Controllers\AccountController::class, 'index'])->name('account');
     Route::get('/orders',  [\App\Http\Controllers\AccountController::class, 'orders'])->name('orders');
+    Route::get('/profile', [\App\Http\Controllers\AccountController::class, 'profile'])->name('profile');
+    Route::patch('/profile', [\App\Http\Controllers\AccountController::class, 'updateProfile'])->name('profile.update');
 });
 
 
@@ -105,3 +109,5 @@ Route::middleware(['auth', 'role:admin'])
 /* ============== ЮРИДИЧЕСКИЕ СТРАНИЦЫ ============== */
 Route::get('/privacy', fn() => view('legal.privacy'))->name('legal.privacy');
 Route::get('/oferta',  fn() => view('legal.oferta'))->name('legal.oferta');
+
+Route::post('/delivery/save', [\App\Http\Controllers\DeliveryController::class, 'save'])->name('delivery.save');

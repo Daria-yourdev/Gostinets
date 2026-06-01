@@ -33,7 +33,7 @@
         <div class="cart-flash">{{ session('flash') }}</div>
         @endif
 
-        @if($items->isEmpty())
+        @if($items->isEmpty() && (!isset($customItems) || $customItems->isEmpty()))
         {{-- ============ ПУСТАЯ КОРЗИНА ============ --}}
         <div class="cart-empty">
             <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -136,14 +136,9 @@
                         style="--jam: var(--burgundy)">
 
                         <div class="cart-item__visual cart-item__visual--custom">
-                            <div class="cart-item__jambar" aria-hidden="true"></div>
-                            <svg viewBox="0 0 60 72" fill="none" aria-hidden="true">
-                                <path d="M15 22 L45 22 L42 62 Q42 68 36 68 L24 68 Q18 68 18 62 Z"
-                                    fill="var(--burgundy)" opacity="0.2" />
-                                <path d="M12 22 L48 22" stroke="var(--burgundy)" stroke-width="3" />
-                                <path d="M24 16 L24 10 Q24 7 27 7 L33 7 Q36 7 36 10 L36 16"
-                                    stroke="var(--burgundy)" stroke-width="1.5" fill="none" />
-                            </svg>
+                            <!-- <div class="cart-item__jambar" aria-hidden="true"></div> -->
+                            <img src="{{ asset('media/cotel/kastom_card.jpg') }}"
+                                alt="{{ $p->name }}" loading="lazy">
                         </div>
 
                         <div class="cart-item__info">
@@ -225,6 +220,7 @@
                     </div>
                     @endif
 
+                    @auth
                     <a href="{{ route('checkout') }}" class="btn-primary cart-checkout-btn">
                         <span>Унести с собой</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -232,6 +228,18 @@
                             <path d="M5 12h14M13 6l6 6-6 6" />
                         </svg>
                     </a>
+                    @else
+                    <button type="button" class="btn-primary cart-checkout-btn" data-requires-auth>
+                        <span>Войти и оформить</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                    <p style="font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--ink-2); margin: 8px 0 0; text-align: center;">
+                        Заказ оформляется только для гостей с грамотой
+                    </p>
+                    @endauth
 
                     <a href="{{ route('catalog') }}" class="cart-summary__continue">
                         ← вернуться к выбору

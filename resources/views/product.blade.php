@@ -331,28 +331,30 @@
                 <div class="product-tabs__content">
                     <div class="product-delivery">
                         <div class="product-delivery__item">
-                            <span class="product-delivery__icon">📦</span>
+                            <div>
+                                <strong>Самовывоз, Казань</strong>
+                                <p>Адрес: г. Казань, ул. Мавлютова, д. 15. Согласуем время по телефону после оплаты.</p>
+                            </div>
+                        </div>
+                        <div class="product-delivery__item">
                             <div>
                                 <strong>СДЭК</strong>
                                 <p>Доставка в пункты выдачи и курьером. Срок — 3–7 рабочих дней. Стоимость рассчитывается при оформлении.</p>
                             </div>
                         </div>
                         <div class="product-delivery__item">
-                            <span class="product-delivery__icon">✉️</span>
                             <div>
                                 <strong>Почта России</strong>
                                 <p>До любого населённого пункта. Срок — 7–21 день. Подходит для подарков в отдалённые места.</p>
                             </div>
                         </div>
                         <div class="product-delivery__item">
-                            <span class="product-delivery__icon">🎁</span>
                             <div>
                                 <strong>Подарочная упаковка</strong>
                                 <p>По запросу упакуем в льняной мешочек с сургучной печатью. Добавим открытку с вашим текстом — бесплатно.</p>
                             </div>
                         </div>
                         <div class="product-delivery__item">
-                            <span class="product-delivery__icon">🔄</span>
                             <div>
                                 <strong>Возврат</strong>
                                 <p>Если банка пришла повреждённой — пришлите фото, заменим или вернём деньги. Без сложностей.</p>

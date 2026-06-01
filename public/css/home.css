@@ -2508,3 +2508,219 @@ img {
     border-color: var(--burgundy);
     background: rgba(73, 14, 14, 0.07);
 }
+
+/* ===========================================================
+   ГОСТИНЕЦЪ — модалка выбора доставки
+   =========================================================== */
+.delivery-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.delivery-modal[hidden] {
+    display: none;
+}
+
+.delivery-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 22, 20, 0.55);
+    backdrop-filter: blur(3px);
+    animation: fade-in 0.25s ease;
+}
+
+.delivery-modal__inner {
+    position: relative;
+    background: var(--bg);
+    border: 1.5px solid var(--ink);
+    box-shadow: 12px 12px 12px #490e0e6f;
+    padding: 32px 32px 28px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modal-pop 0.35s cubic-bezier(.2, .8, .2, 1);
+}
+
+.delivery-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--line-strong, rgba(0, 0, 0, 0.2));
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-2);
+}
+
+.delivery-modal__close:hover {
+    background: var(--paper);
+    transform: rotate(90deg);
+}
+
+.delivery-modal h3 {
+    font-family: var(--local);
+    font-size: 28px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    color: var(--burgundy);
+}
+
+.delivery-modal__hint {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-2);
+    opacity: 0.7;
+    margin: 0 0 22px;
+}
+
+.delivery-modal__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+/* Карточка опции */
+.delivery-option {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+    overflow: hidden;
+    width: 100%;
+}
+
+.delivery-option:hover {
+    box-shadow: 4px 4px 0 var(--gold);
+    transform: translate(-2px, -2px);
+}
+
+.delivery-option.--active {
+    box-shadow: 4px 4px 0 var(--burgundy);
+    border-color: var(--burgundy);
+    transform: translate(-2px, -2px);
+}
+
+.delivery-option__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-bottom: 1px dashed rgba(26, 22, 20, 0.15);
+}
+
+.delivery-option__head svg {
+    width: 28px;
+    height: 28px;
+    color: var(--burgundy);
+    flex-shrink: 0;
+}
+
+.delivery-option__head strong {
+    display: block;
+    font-family: var(--sans);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.delivery-option__head span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
+    margin-top: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+/* Подопции (раскрываются при выборе) */
+.delivery-option__sub {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s, padding 0.25s;
+    padding: 0 18px;
+}
+
+.delivery-option.--active .delivery-option__sub {
+    max-height: 240px;
+    padding: 14px 18px 16px;
+}
+
+.delivery-suboption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.delivery-suboption input[type="radio"] {
+    accent-color: var(--burgundy);
+    cursor: pointer;
+}
+
+.delivery-suboption strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.delivery-suboption__text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-2);
+    margin: 6px 0 0;
+    opacity: 0.75;
+}
+
+/* Кнопка сохранения */
+.delivery-modal__save {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--burgundy);
+    color: var(--cream);
+    /* border: 1.5px solid var(--burgundy); */
+    border: 0;
+    font-family: var(--mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.delivery-modal__save:hover {
+    background: var(--ink);
+    transform: translateY(-1px);
+}
+
+.delivery-modal__save:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    .delivery-modal__inner {
+        padding: 24px 18px 20px;
+    }
+
+    .delivery-modal h3 {
+        font-size: 22px;
+    }
+}

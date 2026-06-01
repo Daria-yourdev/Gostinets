@@ -20,41 +20,67 @@
     /* Карты-варенья для оракула:
        prediction — короткое пророчество (психоделика+фольклор).
        buyLabel  — название сорта, которое подставится в CTA «Забрать ___ →». */
+    /* ===========================================================
+       ORACLE — карты-предсказания
+       prediction — психоделическое пророчество (4-6 строк, образное)
+       berry      — slug ягоды для фильтра каталога
+       buyLabel   — название сорта для CTA
+       =========================================================== */
     const ORACLE_BERRIES = [
         {
-            name: 'Вишня', lab: 'Страсть', rune: 'berry',
-            prediction: 'Вишня сулит встречу, что обожжёт. Спрячь сердце за косточкой — или впусти.',
+            name: 'Вишня', lab: 'Страсть', rune: 'berry', berry: 'vishnya',
+            prediction: 'В крови вишни — память лета и стук косточки в ладони. Кто-то наберёт твой номер именно в ту минуту, когда ты решишь больше не ждать. Не отвечай сразу. Сначала съешь ложку. Потом две.',
             buyLabel: 'вишнёвое'
         },
         {
-            name: 'Малина', lab: 'Радость', rune: 'sun',
-            prediction: 'Малина шепчет: эта неделя пахнет солнцем. Жди весточки от того, по кому скучаешь.',
+            name: 'Малина', lab: 'Радость', rune: 'sun', berry: 'malina',
+            prediction: 'Малина растёт на старых пожарищах — там, где раньше было трудно. Эта неделя начнётся плохо, закончится смешно. Через семь дней узнаешь имя человека, рядом с которым станешь собой. Он уже идёт.',
             buyLabel: 'малиновое'
         },
         {
-            name: 'Ежевика', lab: 'Тайна', rune: 'diamond',
-            prediction: 'Ежевика прячет ответ. То, что искал давно, найдётся не там, где смотришь.',
+            name: 'Ежевика', lab: 'Тайна', rune: 'diamond', berry: 'ezhevika',
+            prediction: 'Ежевика растёт в шипах не зря — она прячет то, что досталось дорого. Ответ, который ты ищешь полгода, лежит в твоём собственном кармане. Прочти старое письмо. Открой папку, в которую боялся заглянуть.',
             buyLabel: 'ежевичное'
         },
         {
-            name: 'Лимон', lab: 'Ясность', rune: 'tree',
-            prediction: 'Лимон зовёт начать заново. Время на разговор, что давно откладываешь.',
+            name: 'Лимон', lab: 'Ясность', rune: 'tree', berry: 'limon',
+            prediction: 'Лимон — это правда без анестезии. Кислое сводит скулы, но возвращает зрение. Тот разговор, который ты прокручиваешь в голове третий месяц, нужно провести в эту субботу. Подготовься, но не репетируй. Слова придут сами.',
             buyLabel: 'лимонное'
         },
         {
-            name: 'Абрикос', lab: 'Покой', rune: 'spiral',
-            prediction: 'Абрикос обещает тишину. Позвони бабушке. Налей чай. Ничего не объясняй.',
+            name: 'Абрикос', lab: 'Покой', rune: 'spiral', berry: 'abrikos',
+            prediction: 'Абрикос созревает медленно, как доверие. Сейчас твоё дело — ничего не делать. Не звонить, не объяснять, не доказывать. Просто свари чай, поставь на стол вторую чашку — на случай, если кто-то заглянет. Никто не заглянет. И это хорошо.',
             buyLabel: 'абрикосовое'
         },
         {
-            name: 'Клубника', lab: 'Любовь', rune: 'bird',
-            prediction: 'Клубника знает: о тебе думают. Позволь себе быть в центре чьего-то лета.',
+            name: 'Клубника', lab: 'Любовь', rune: 'bird', berry: 'klubnika',
+            prediction: 'Клубнику собирают на закате — днём она прячется. О тебе сегодня думают трое: один — с теплом, второй — с обидой, третий — впервые. Третий тебя удивит. Не отказывай ему в чае, даже если устала.',
             buyLabel: 'клубничное'
+        },
+        {
+            name: 'Клюква', lab: 'Тайна', rune: 'diamond', berry: 'klukva',
+            prediction: 'Клюква любит болото — там, где другие тонут, она цветёт. То, что кажется тебе тупиком, — это вход. Прислушайся к человеку, которого обычно перебиваешь. У него есть карта местности, которую ты потерял.',
+            buyLabel: 'клюквенное'
+        },
+        {
+            name: 'Груша', lab: 'Покой', rune: 'spiral', berry: 'grusha',
+            prediction: 'Груша варится дольше всех — её нельзя торопить. Через девять дней закончится то, чего ты ждал с весны. И ничего не случится. Это и есть ответ — что ничего не случится, и тебе не понадобится то, к чему ты так готовился.',
+            buyLabel: 'грушовое'
+        },
+        {
+            name: 'Яблоко', lab: 'Ясность', rune: 'tree', berry: 'yabloko',
+            prediction: 'Яблоко — память детства и предательство Евы в одном плоде. Что-то старое попросится обратно: фотография, человек, привычка. Не пускай всё подряд. Возьми только одно — что вернётся как тёплое, а не как стыдное.',
+            buyLabel: 'яблочное'
+        },
+        {
+            name: 'Шишка', lab: 'Тайна', rune: 'diamond', berry: 'shishka',
+            prediction: 'Сосновую шишку для варенья собирают две недели в году — пока она ещё зелёная и пахнет смолой. Ты сейчас в таком же окне. Решай быстро — то, что откладывал. Через две недели возможность закаменеет, как шишка к августу.',
+            buyLabel: 'шишковое'
         }
     ];
 
     /* CITY: смена города + сохранение в localStorage */
-    const cityModal = document.getElementById('city-modal');
+    /* const cityModal = document.getElementById('city-modal');
     const cityBtn = document.getElementById('change-city-btn');
     const cityClose = document.getElementById('city-modal-close');
     const cityOverlay = document.getElementById('city-modal-overlay');
@@ -118,32 +144,83 @@
     }
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && cityModal && !cityModal.hasAttribute('hidden')) closeCityModal();
-    });
+    }); */
 
-    /* VERTICAL SLIDER (Hero) */
+    /* VERTICAL SLIDER (Hero) — бесконечный через клоны */
     (() => {
         const root = document.querySelector('.vslider');
         if (!root) return;
+
         const track = root.querySelector('.vslider__track');
         const dots = Array.from(root.querySelectorAll('.vslider__dot'));
         const btnUp = root.querySelector('.vslider__btn--up');
         const btnDown = root.querySelector('.vslider__btn--down');
-        const total = dots.length || track.children.length || 1;
-        const AUTOPLAY_MS = 8000; // было 5500 — слишком быстро для рассматривания
-        let index = 0;
+        const slides = Array.from(track.children);
+        const total = slides.length;
+        if (total < 2) return;
+
+        const AUTOPLAY_MS = 8000;
+
+        // Клонируем первый и последний слайды
+        const firstClone = slides[0].cloneNode(true);
+        const lastClone = slides[total - 1].cloneNode(true);
+        firstClone.setAttribute('aria-hidden', 'true');
+        lastClone.setAttribute('aria-hidden', 'true');
+        track.appendChild(firstClone);
+        track.insertBefore(lastClone, slides[0]);
+
+        let index = 1;     // реальный первый слайд = индекс 1 в DOM (после клон-последнего)
         let timer = null;
+        let busy = false;
 
-        function go(i) {
-            index = ((i % total) + total) % total;
+        // Стартовая позиция без анимации
+        track.style.transition = 'none';
+        track.style.transform = `translateY(-${index * 100}%)`;
+        void track.offsetHeight;
+        track.style.transition = '';
+
+        function go(target) {
+            if (busy) return;
+            busy = true;
+            index = target;
             track.style.transform = `translateY(-${index * 100}%)`;
-            dots.forEach((d, k) => d.classList.toggle('--active', k === index));
+            updateDots();
         }
-        function start() { stop(); timer = setInterval(() => go(index + 1), AUTOPLAY_MS); }
-        function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
-        if (btnUp) btnUp.addEventListener('click', () => { go(index - 1); start(); });
-        if (btnDown) btnDown.addEventListener('click', () => { go(index + 1); start(); });
-        dots.forEach((d, i) => d.addEventListener('click', () => { go(i); start(); }));
+        function updateDots() {
+            let realIndex;
+            if (index === 0) realIndex = total - 1;
+            else if (index === total + 1) realIndex = 0;
+            else realIndex = index - 1;
+            dots.forEach((d, k) => d.classList.toggle('--active', k === realIndex));
+        }
+
+        track.addEventListener('transitionend', () => {
+            busy = false;
+            if (index === 0) {
+                track.style.transition = 'none';
+                index = total;
+                track.style.transform = `translateY(-${index * 100}%)`;
+                void track.offsetHeight;
+                track.style.transition = '';
+            } else if (index === total + 1) {
+                track.style.transition = 'none';
+                index = 1;
+                track.style.transform = `translateY(-${index * 100}%)`;
+                void track.offsetHeight;
+                track.style.transition = '';
+            }
+        });
+
+        const next = () => go(index + 1);
+        const prev = () => go(index - 1);
+        const start = () => { stop(); timer = setInterval(next, AUTOPLAY_MS); };
+        const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+
+        if (btnUp) btnUp.addEventListener('click', () => { prev(); start(); });
+        if (btnDown) btnDown.addEventListener('click', () => { next(); start(); });
+        dots.forEach((d, i) => d.addEventListener('click', () => { go(i + 1); start(); }));
+
         root.addEventListener('mouseenter', stop);
         root.addEventListener('mouseleave', start);
 
@@ -152,12 +229,12 @@
         root.addEventListener('touchend', e => {
             if (touchY === null) return;
             const diff = touchY - e.changedTouches[0].clientY;
-            if (Math.abs(diff) > 40) go(index + (diff > 0 ? 1 : -1));
+            if (Math.abs(diff) > 40) (diff > 0 ? next : prev)();
             touchY = null;
             start();
         });
 
-        go(0);
+        updateDots();
         start();
     })();
 
@@ -217,7 +294,7 @@
         });
 
         // Заполняем результат: вердикт + предсказание + CTA-кнопка к каталогу
-        if (oracleResult) {
+        /* if (oracleResult) {
             oracleResult.innerHTML =
                 '<div class="oracle__verdict">Сегодня тебе шепчет — <b>' + pick.name + '</b>.</div>' +
                 '<div class="oracle__pred">' + pick.prediction + '</div>' +
@@ -247,6 +324,19 @@
                     }, 700);
                 });
             }
+        } */
+
+        // Заполняем результат: вердикт + предсказание + CTA-кнопка к каталогу
+        if (oracleResult) {
+            const base = document.querySelector('meta[name="base-url"]')?.content?.replace(/\/$/, '') || '';
+            const catalogUrl = `${base}/catalog?berry=${encodeURIComponent(pick.berry)}`;
+
+            oracleResult.innerHTML =
+                '<div class="oracle__verdict">Сегодня тебе шепчет — <b>' + pick.name + '</b>.</div>' +
+                '<div class="oracle__pred">' + pick.prediction + '</div>' +
+                '<a href="' + catalogUrl + '" class="oracle__cta btn-primary" data-berry="' + pick.berry + '">' +
+                '<span>Забрать ' + pick.buyLabel + ' варенье →</span>' +
+                '</a>';
         }
 
         if (oracleReset) oracleReset.classList.add('--show');

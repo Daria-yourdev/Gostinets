@@ -226,7 +226,7 @@
                 <div class="cat-toolbar__sort">
                     <label for="cat-sort">Порядок:</label>
                     <select id="cat-sort" name="sort" data-sort-control>
-                        <option value="popular" {{ $filters['sort']==='popular' ? 'selected' : '' }}>сначала любимые</option>
+                        <option value="popular" {{ $filters['sort']==='season' ? 'selected' : '' }}>сначала сезонные</option>
                         <option value="new" {{ $filters['sort']==='new' ? 'selected' : '' }}>сначала новые</option>
                         <option value="cheap" {{ $filters['sort']==='cheap' ? 'selected' : '' }}>сначала дешёвые</option>
                         <option value="expensive" {{ $filters['sort']==='expensive' ? 'selected' : '' }}>сначала дорогие</option>

@@ -14,10 +14,11 @@
 .auth-modal {
     position: fixed;
     inset: 0;
-    z-index: 250; /* выше city-modal на всякий случай */
+    z-index: 250;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .auth-modal[hidden] {
@@ -34,13 +35,13 @@
 
 .auth-modal__inner {
     position: relative;
-    width: 92%;
-    max-width: 480px;
+    max-width: 520px;
+    width: 100%;
     max-height: 90vh;
     overflow-y: auto;
     background: var(--bg);
     border: 1.5px solid var(--ink);
-    padding: 36px 32px 28px;
+    padding: 20px 32px 28px;
     box-shadow: 12px 12px 12px #490e0e6f;
     animation: modal-pop 0.35s cubic-bezier(.2, .8, .2, 1);
 }
@@ -48,7 +49,7 @@
 /* Используем те же keyframes, что в city-modal — они уже есть */
 
 .auth-modal__close {
-    position: absolute;
+    /* position: absolute;
     top: 16px;
     right: 18px;
     width: 36px;
@@ -60,7 +61,18 @@
     color: var(--ink-2);
     cursor: pointer;
     transition: background 0.25s, transform 0.25s;
-    z-index: 2;
+    z-index: 2; */
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid var(--line-strong, rgba(0, 0, 0, 0.2));
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink-2);
 }
 
 .auth-modal__close:hover {
@@ -69,7 +81,7 @@
 }
 
 /* Декоративная печать в углу */
-.auth-modal__seal {
+/* .auth-modal__seal {
     position: absolute;
     top: 12px;
     left: 14px;
@@ -84,7 +96,7 @@
     width: 100%;
     height: 100%;
 }
-
+ */
 
 /* -----------------------------------------------------------
    AUTH MODAL — табы (Войти / Завести грамоту)
@@ -138,8 +150,15 @@
 }
 
 @keyframes panel-fade {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0);   }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .auth-modal__head {
@@ -193,7 +212,7 @@
     width: 100%;
     padding: 12px 16px;
     border: 1.5px solid var(--ink);
-    border-radius: 12px;
+    /* border-radius: 12px; */
     background: var(--paper);
     font: inherit;
     font-size: 15px;
@@ -231,8 +250,15 @@
     transition: opacity 0.2s, background 0.2s;
 }
 
-.auth-field__eye:hover { opacity: 1; background: var(--paper); }
-.auth-field__eye svg   { width: 18px; height: 18px; }
+.auth-field__eye:hover {
+    opacity: 1;
+    background: var(--paper);
+}
+
+.auth-field__eye svg {
+    width: 18px;
+    height: 18px;
+}
 
 .auth-field__eye.--on {
     opacity: 1;
@@ -255,10 +281,10 @@
     max-height: 0;
     overflow: hidden;
     margin-top: 0;
-    font-family: var(--serif);
+    font-family: var(--sans);
     font-style: italic;
     font-size: 13px;
-    color: var(--burgundy);
+    color: rgb(181, 0, 0);
     opacity: 0;
     transition: opacity 0.25s, max-height 0.25s, margin-top 0.25s;
 }
@@ -305,7 +331,7 @@
 }
 
 .auth-field.--check.--invalid span {
-    color: var(--burgundy);
+    color: rgb(181, 0, 0);
 }
 
 
@@ -323,7 +349,7 @@
     background: var(--burgundy);
     color: var(--cream);
     border: 0;
-/*     border-radius: 999px; */
+    /*     border-radius: 999px; */
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: 0.18em;
@@ -375,7 +401,9 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -388,7 +416,7 @@
     padding: 0 14px;
     max-height: 0;
     overflow: hidden;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     font-family: var(--serif);
     font-size: 14px;
     line-height: 1.4;
@@ -404,13 +432,13 @@
 .auth-modal__alert.--error {
     background: #FFF0EC;
     color: var(--burgundy);
-    border: 1px solid rgba(73, 14, 14, 0.2);
+    /* border: 1px solid rgba(73, 14, 14, 0.2); */
 }
 
 .auth-modal__alert.--success {
     background: #F2F4EC;
     color: var(--moss, #5C5238);
-    border: 1px solid rgba(92, 82, 56, 0.3);
+    /* border: 1px solid rgba(92, 82, 56, 0.3); */
 }
 
 
@@ -594,4 +622,44 @@
         right: -8px;
         width: 220px;
     }
+}
+
+input.--invalid {
+    border-color: var(--burgundy) !important;
+}
+
+input.--valid {
+    border-color: var(--moss) !important;
+}
+
+.field-error {
+    display: block;
+    margin-top: 4px;
+    color: var(--burgundy);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 12px;
+}
+
+.password-strength {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.password-strength--1,
+.password-strength--2 {
+    color: var(--burgundy);
+}
+
+.password-strength--3 {
+    color: #B8860B;
+}
+
+.password-strength--4,
+.password-strength--5 {
+    color: var(--moss);
 }
