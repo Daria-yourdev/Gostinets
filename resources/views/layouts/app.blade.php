@@ -48,9 +48,9 @@
                 </div>
                 <nav class="top-bar__nav" aria-label="Социальные сети">
                     <a class="live" href="#">Огонь горит · сегодня варится клубника</a>
-                    <a href="#">Telegram</a>
-                    <a href="#">VK</a>
-                    <a href="#">Pinterest</a>
+                    <a href="https://web.max.ru/">Mакс</a>
+                    <a href="https://vk.com/club239216674">ВК</a>
+                    <a href="https://yandex.ru/chat#/">Яндекс</a>
                 </nav>
             </div>
         </div>
@@ -75,8 +75,8 @@
                         <path d="m20 20-4-4" />
                     </svg>
                     <input type="text" name="q" value="{{ request('q') }}"
-                           placeholder="Что ищешь, добрый гость? Варенье на зиму, гостинец к чаю..."
-                           aria-label="Поиск по кладовой">
+                        placeholder="Что ищешь, добрый гость? Варенье на зиму, гостинец к чаю..."
+                        aria-label="Поиск по кладовой">
                     <button type="submit" class="search__btn">
                         <span>Искать</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -145,7 +145,7 @@
                                 <path d="M5 4h11l3 3v13H5z" />
                                 <path d="M9 10h6M9 14h6M9 18h4" />
                             </svg>
-                            
+
                         </span>
                         <span class="action__label">Заказы</span>
                     </a>
@@ -181,14 +181,14 @@
                                 @endif
                             </div>
 
-                            <a href="{{ route('account') }}" class="user-menu__item" role="menuitem">
+                            <!-- <a href="{{ route('account') }}" class="user-menu__item" role="menuitem">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <circle cx="12" cy="9" r="4" />
                                     <path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" />
                                 </svg>
                                 Личное
-                            </a>
+                            </a> -->
                             <a href="{{ route('orders') }}" class="user-menu__item" role="menuitem">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -253,7 +253,7 @@
                 </button>
                 <button type="button" class="city-modal__item" data-city="Москва">Москва</button>
                 <button type="button" class="city-modal__item" data-city="Санкт-Петербург">Санкт-Петербург</button>
-                <button type="button" class="city-modal__item" data-city="Казань">Тула</button>
+                <button type="button" class="city-modal__item" data-city="Tula">Тула</button>
                 <button type="button" class="city-modal__item" data-city="Нижний Новгород">Нижний Новгород</button>
                 <button type="button" class="city-modal__item" data-city="Екатеринбург">Екатеринбург</button>
                 <button type="button" class="city-modal__item" data-city="Новосибирск">Новосибирск</button>
@@ -307,43 +307,54 @@
                     <h4>Тропинки</h4>
                     <nav class="footer__nav">
                         <a href="#banner">Начало</a>
-                        <a href="#catalog">Закрома</a>
-                        <a href="#about">Про варево</a>
-                        <a href="#feedbacks">Голоса</a>
+                        <a href="{{ route('catalog') }}">Закрома</a>
+                        <a href="#about">Сказ хозяйки</a>
+                        <a href="#questions">Вопросы</a>
                         <a href="#oracle">Оракул ягод</a>
-                        <a href="#">Обрести банку</a>
+                        <a href="{{ route('catalog') }}">Обрести банку</a>
                     </nav>
                 </div>
 
                 <div class="footer__col">
                     <h4>В социальном лесу</h4>
                     <nav class="footer__nav">
-                        <a href="#">Telegram · @gostinec</a>
-                        <a href="#">VK · gostinec.jam</a>
-                        <a href="#">Pinterest · jamtales</a>
-                        <a href="#">YouTube · сказы из варни</a>
+                        <a href="https://web.max.ru/">Макс · @gostinets</a>
+                        <a href="https://vk.com/club239216674">ВК · gostinets.jam</a>
+                        <a href="https://yandex.ru/chat#/">Яндекс · @gostinets</a>
+                        <a href="https://rutube.ru/">RuTube · сказы из варни</a>
                     </nav>
 
-                    <div class="newsletter">
+                    {{-- ===== ПОДПИСКА В ФУТЕРЕ ===== --}}
+                    <!-- <div class="newsletter" id="newsletter-block">
                         <h3>Первый заказ?</h3>
                         <p>Подпишись — пришлём весточку о новых сортах, ярмарках и сезонных скидках.</p>
-                        <form class="newsletter__form" onsubmit="return false;">
-                            <input type="email" placeholder="Введите email..." aria-label="Email">
-                            <button type="submit">Подписаться</button>
+                        <form class="newsletter__form" id="subscribe-form" novalidate>
+                            @csrf
+                            <input type="email"
+                                name="email"
+                                id="subscribe-email"
+                                placeholder="Введите email..."
+                                aria-label="Email для рассылки"
+                                autocomplete="email"
+                                required>
+                            <button type="submit" id="subscribe-btn">Подписаться</button>
                         </form>
+
                         <label class="newsletter__consent">
-                            <input type="checkbox" required>
+                            <input type="checkbox" id="subscribe-consent" required>
                             <span>Согласен на обработку персональных данных</span>
                         </label>
-                    </div>
+
+                        <p class="newsletter__result" id="subscribe-result" hidden></p>
+                    </div> -->
                 </div>
             </div>
 
             <div class="footer__bottom">
                 <span>© 2025–2026 · Гостинецъ</span>
                 <div class="footer__bottom-nav">
-                    <a href="#">Политика конфиденциальности</a>
-                    <a href="#">Договор оферты</a>
+                    <a href="{{ route('legal.privacy') }}">Политика конфиденциальности</a>
+                    <a href="{{ route('legal.oferta') }}">Договор оферты</a>
                 </div>
                 <!-- <span>дипломный проект · Пирогова Д. Д.</span> -->
             </div>
@@ -365,7 +376,7 @@
                     Войти в избу
                 </button>
                 <button type="button" class="auth-modal__tab" data-tab="register" role="tab" aria-selected="false">
-                    Завести грамоту
+                    Зарегистрироваться
                 </button>
             </div>
 

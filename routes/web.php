@@ -83,21 +83,25 @@ Route::middleware(['auth', 'role:admin'])
             ->name('dashboard');
 
         // Заказы
-        Route::get   ('orders',                [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
-        Route::get   ('orders/{order}',        [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
-        Route::patch ('orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.status');
+        Route::get('orders',                [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}',        [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+        Route::patch('orders/{order}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.status');
 
         // Товары — полный CRUD
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)
             ->except(['show']);
 
         // Кастомные варенья (котлы)
-        Route::get  ('custom-jams',                     [\App\Http\Controllers\Admin\CustomJamController::class, 'index'])->name('custom-jams.index');
-        Route::get  ('custom-jams/{customJam}',         [\App\Http\Controllers\Admin\CustomJamController::class, 'show'])->name('custom-jams.show');
+        Route::get('custom-jams',                     [\App\Http\Controllers\Admin\CustomJamController::class, 'index'])->name('custom-jams.index');
+        Route::get('custom-jams/{customJam}',         [\App\Http\Controllers\Admin\CustomJamController::class, 'show'])->name('custom-jams.show');
         Route::patch('custom-jams/{customJam}/status',  [\App\Http\Controllers\Admin\CustomJamController::class, 'updateStatus'])->name('custom-jams.status');
 
         // Пользователи
-        Route::get  ('users',             [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-        Route::get  ('users/{user}',      [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('users.show');
+        Route::get('users',             [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+        Route::get('users/{user}',      [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('users.show');
         Route::patch('users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.role');
     });
+
+/* ============== ЮРИДИЧЕСКИЕ СТРАНИЦЫ ============== */
+Route::get('/privacy', fn() => view('legal.privacy'))->name('legal.privacy');
+Route::get('/oferta',  fn() => view('legal.oferta'))->name('legal.oferta');

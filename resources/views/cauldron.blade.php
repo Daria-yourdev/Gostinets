@@ -393,9 +393,9 @@
                         </svg>
                         <span class="cauldron-submit__spinner" aria-hidden="true"></span>
                     </button>
-                    <button type="submit" class="btn-ghost cauldron-draft" name="action" value="draft">
+                    <!-- <button type="submit" class="btn-ghost cauldron-draft" name="action" value="draft">
                         Записать в гримуар
-                    </button>
+                    </button> -->
                     <p class="cauldron-note">
                         Мария возьмётся в течение дня. О каждом шаге — варка, остывание, отправка — придёт весточка.
                     </p>

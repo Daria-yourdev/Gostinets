@@ -15,14 +15,14 @@
                     <circle cx="60" cy="60" r="34" stroke="currentColor" stroke-width="2" />
                     <path d="M44 60 L55 71 L78 48" stroke="currentColor" stroke-width="3"
                         stroke-linecap="round" stroke-linejoin="round" fill="none" />
-                    <text x="60" y="98" text-anchor="middle" font-family="JetBrains Mono"
-                        font-size="6" letter-spacing="1.4" fill="currentColor" stroke="none">ОПЛАЧЕНО</text>
+                   <!--  <text x="60" y="98" text-anchor="middle" font-family="JetBrains Mono"
+                        font-size="6" letter-spacing="1.4" fill="currentColor" stroke="none">ОПЛАЧЕНО</text> -->
                 </svg>
             </div>
 
-            <span class="checkout-result__kicker">расплатились</span>
+            <span class="checkout-result__kicker">ОПЛАЧЕНО</span>
             <h1 class="checkout-result__title">
-                Готово.<br>Пора <em>разжигать огонь!</em>.
+                Готово.<br>Пора <em>разжигать огонь</em>!
             </h1>
 
             <p class="checkout-result__lede">

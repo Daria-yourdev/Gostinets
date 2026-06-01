@@ -120,7 +120,7 @@
                         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
                             <circle cx="8" cy="8" r="4" fill="currentColor" />
                         </svg>
-                        В кладовой: {{ $product->stock }} {{ trans_choice('банка|банки|банок', $product->stock) }}
+                        В кладовой: {{ $product->stock }} {{ plural($product->stock, 'банка', 'банки', 'банок') }}
                         @else
                         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
                             <circle cx="8" cy="8" r="4" fill="currentColor" />

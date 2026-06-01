@@ -1,6 +1,37 @@
 /* ===========================================================
    ГОСТИНЕЦЪ — стили оформления заказа
    =========================================================== */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+}
+
+.breadcrumbs a {
+    color: inherit;
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.breadcrumbs a:hover {
+    opacity: 1;
+    color: var(--burgundy);
+}
+
+.breadcrumbs__current {
+    color: var(--burgundy);
+}
+
+.breadcrumbs>span[aria-hidden="true"] {
+    opacity: 0.4;
+}
 
 .checkout-page {
     padding: 24px 0 80px;
@@ -15,7 +46,7 @@
 }
 
 .checkout-head h1 {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: clamp(36px, 5vw, 60px);
     line-height: 1.05;
     margin: 0 0 10px;
@@ -79,7 +110,7 @@
 }
 
 .checkout-block__title {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: 26px;
     color: var(--ink);
     margin: 0 0 4px;
@@ -222,7 +253,7 @@
     background: var(--bg-warm);
 }
 
-.checkout-delivery__option input:checked + .checkout-delivery__inner {
+.checkout-delivery__option input:checked+.checkout-delivery__inner {
     border-color: var(--burgundy);
     box-shadow: 3px 3px 0 var(--burgundy);
 }
@@ -245,11 +276,11 @@
     transition: transform 0.2s;
 }
 
-.checkout-delivery__option input:checked + .checkout-delivery__inner .checkout-delivery__dot {
+.checkout-delivery__option input:checked+.checkout-delivery__inner .checkout-delivery__dot {
     border-color: var(--burgundy);
 }
 
-.checkout-delivery__option input:checked + .checkout-delivery__inner .checkout-delivery__dot::after {
+.checkout-delivery__option input:checked+.checkout-delivery__inner .checkout-delivery__dot::after {
     transform: scale(1);
 }
 
@@ -402,12 +433,12 @@
     transition: opacity 0.2s;
 }
 
-.checkout-agree input:checked + .checkout-agree__box {
+.checkout-agree input:checked+.checkout-agree__box {
     background: var(--burgundy);
     border-color: var(--burgundy);
 }
 
-.checkout-agree input:checked + .checkout-agree__box::after {
+.checkout-agree input:checked+.checkout-agree__box::after {
     opacity: 1;
 }
 
@@ -622,7 +653,9 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .checkout-summary__safety {
@@ -683,8 +716,15 @@
 }
 
 @keyframes sealAppear {
-    0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
-    100% { transform: scale(1) rotate(0); opacity: 1; }
+    0% {
+        transform: scale(0) rotate(-30deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
 }
 
 .checkout-result__kicker {
@@ -698,7 +738,7 @@
 }
 
 .checkout-result__title {
-    font-family: var(--display);
+    font-family: var(--local);
     font-size: clamp(36px, 5vw, 56px);
     line-height: 1.1;
     color: var(--ink);

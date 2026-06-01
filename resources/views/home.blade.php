@@ -144,8 +144,8 @@
         </div>
 
         @php
-            // Берём 5 актуальных банок из БД для лендинга
-            $jams = \App\Models\Product::active()->take(5)->get();
+        // Берём 5 актуальных банок из БД для лендинга
+        $jams = \App\Models\Product::active()->take(5)->get();
         @endphp
 
         <div class="catalog__grid">
@@ -164,8 +164,8 @@
                 <div class="jar-card__row">
                     <div class="jar-card__price">{{ $j->priceFormatted() }}<small>/ {{ $j->weight }} гр</small></div>
                     <button type="button" class="jar-card__add"
-                            aria-label="В мешочек" title="В мешочек"
-                            data-add-to-cart="{{ $j->id }}">
+                        aria-label="В мешочек" title="В мешочек"
+                        data-add-to-cart="{{ $j->id }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
                             <path d="M12 5v14M5 12h14" />
@@ -176,7 +176,7 @@
             @endforeach
         </div>
 
-        <div class="catalog__foot">
+        <!-- <div class="catalog__foot">
             <div class="catalog__filters">
                 @foreach (['Всё варево', 'Ягодное', 'Цитрус', 'Без сахара', 'В подарок', 'Сезон'] as $i => $f)
                 <button type="button" class="filter-chip {{ $i === 0 ? '--on' : '' }}">{{ $f }}</button>
@@ -189,7 +189,7 @@
                     <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
             </a>
-        </div>
+        </div> -->
     </div>
 </section>
 
@@ -353,7 +353,7 @@
 </section>
 
 {{-- FAQ --}}
-<section class="section section--paper" id="feedbacks">
+<section class="section section--paper" id="questions">
     <div class="container">
         <div class="section-head">
             <h2 class="section-head__title">Глаголят <em>люди</em> добрые</h2>
@@ -399,13 +399,20 @@
                 <a class="faq__aside-tel" href="tel:+78123090934">+7 (812) 309-09-34</a>
                 <a class="faq__aside-tel --small" href="tel:+79650842909">+7 (965) 084-29-09</a>
                 <p class="faq__aside-hours">пн–вс · 9:00–21:00 по Москве</p>
-                <button type="button" class="btn-primary">
-                    <span>Написать в Telegram</span>
+                <a href="https://web.max.ru/" class="btn-primary">
+                    <span>Написать в Макс</span>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
-                </button>
+                </a>
+                <!-- <button type="button" class="btn-primary">
+                    <span>Написать в Макс</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                </button> -->
             </aside>
         </div>
     </div>

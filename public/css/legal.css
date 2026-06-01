@@ -1,0 +1,204 @@
+/* ===========================================================
+   ГОСТИНЕЦЪ — стили юридических страниц
+   =========================================================== */
+
+/* -----------------------------------------------------------
+   ХЛЕБНЫЕ КРОШКИ
+   ----------------------------------------------------------- */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 18px;
+}
+
+.breadcrumbs a {
+    color: inherit;
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.breadcrumbs a:hover {
+    opacity: 1;
+    color: var(--burgundy);
+}
+
+.breadcrumbs__current {
+    color: var(--burgundy);
+}
+
+.breadcrumbs>span[aria-hidden="true"] {
+    opacity: 0.4;
+}
+
+.legal-page {
+    padding: 32px 0 80px;
+    background: var(--bg);
+}
+
+.legal {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* Шапка */
+.legal__head {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid var(--ink);
+}
+
+.legal__head h1 {
+    font-family: var(--local);
+    font-size: clamp(30px, 4vw, 46px);
+    color: var(--ink);
+    margin: 0 0 10px;
+    font-weight: normal;
+    line-height: 1.1;
+}
+
+.legal__meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--ink-2);
+    opacity: 0.65;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Вступление */
+.legal__intro {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-left: 4px solid var(--burgundy);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+}
+
+.legal__intro p {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+}
+
+.legal__intro p:last-child {
+    margin-bottom: 0;
+}
+
+/* Секции */
+.legal__section {
+    margin-bottom: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed rgba(26, 22, 20, 0.2);
+}
+
+.legal__section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.legal__section h2 {
+    font-family: var(--local);
+    font-size: 22px;
+    font-weight: normal;
+    color: var(--burgundy);
+    margin: 0 0 14px;
+    line-height: 1.2;
+}
+
+.legal__section p {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+}
+
+.legal__section p:last-child {
+    margin-bottom: 0;
+}
+
+.legal__section ul,
+.legal__section ol {
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 14px;
+    padding-left: 24px;
+}
+
+.legal__section li {
+    margin-bottom: 6px;
+}
+
+.legal__section a {
+    color: var(--burgundy);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 3px;
+}
+
+.legal__section a:hover {
+    text-decoration-style: solid;
+}
+
+.legal__section strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+/* Контакты */
+.legal__contacts {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.legal__contacts li {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-2);
+}
+
+.legal__contacts strong {
+    color: var(--ink);
+    min-width: 120px;
+    display: inline-block;
+}
+
+/* Примечание */
+.legal__note {
+    font-family: var(--serif) !important;
+    font-style: italic;
+    font-size: 13px !important;
+    color: var(--ink-2) !important;
+    opacity: 0.6;
+    background: var(--bg-warm);
+    padding: 8px 12px;
+    border-left: 3px solid var(--gold);
+}
+
+/* Адаптация */
+@media (max-width: 640px) {
+    .legal__intro {
+        padding: 16px 18px;
+    }
+
+    .legal__contacts strong {
+        display: block;
+        min-width: auto;
+    }
+}

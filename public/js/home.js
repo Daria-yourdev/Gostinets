@@ -349,3 +349,79 @@
         });
     });
 })();
+
+/* ===========================================================
+   ПОДПИСКА НА РАССЫЛКУ — футер
+   =========================================================== */
+(function () {
+    const form = document.getElementById('subscribe-form');
+    const btn = document.getElementById('subscribe-btn');
+    const result = document.getElementById('subscribe-result');
+    const consent = document.getElementById('subscribe-consent');
+
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Проверяем согласие
+        if (!consent?.checked) {
+            showResult('Поставь галочку согласия.', 'error');
+            return;
+        }
+
+        const email = form.querySelector('input[type="email"]').value.trim();
+        if (!email) {
+            showResult('Введи адрес почты.', 'error');
+            return;
+        }
+
+        // Отправляем
+        btn.disabled = true;
+        btn.textContent = '...';
+
+        try {
+            const csrf = document.querySelector('meta[name="csrf-token"]')?.content;
+            const base = document.querySelector('meta[name="base-url"]')?.content || '';
+
+            const res = await fetch(`${base}/subscribe`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ email, source: 'footer' }),
+            });
+
+            const json = await res.json().catch(() => ({}));
+
+            if (res.ok && json.ok) {
+                // Успех — скрываем форму, показываем сообщение
+                form.hidden = true;
+                consent.closest('label').hidden = true;
+                showResult(
+                    json.already
+                        ? '✓ Ты уже в нашем списке. Весточки придут.'
+                        : '✓ Добавили! Будем писать только о важном.',
+                    'ok'
+                );
+            } else {
+                showResult(json.message || 'Что-то пошло не так, попробуй позже.', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Подписаться';
+            }
+        } catch (err) {
+            showResult('Нет связи. Попробуй чуть позже.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Подписаться';
+        }
+    });
+
+    function showResult(text, type) {
+        result.textContent = text;
+        result.hidden = false;
+        result.className = 'newsletter__result newsletter__result--' + type;
+    }
+})();

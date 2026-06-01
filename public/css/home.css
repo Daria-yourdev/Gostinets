@@ -2469,13 +2469,11 @@ img {
     overflow: hidden;
     /* background-color оставь как был у тебя — у меня его в исходниках не было видно */
     background-image:
-        repeating-radial-gradient(
-            circle at 50% 50%,
+        repeating-radial-gradient(circle at 50% 50%,
             transparent 0,
             transparent 58px,
             rgba(255, 250, 240, 0.10) 59.5px,
-            transparent 61px
-        );
+            transparent 61px);
 }
 
 /* Старый SVG больше не нужен — прячем */
@@ -2487,4 +2485,26 @@ img {
 .oracle .oracle__inner {
     position: relative;
     z-index: 2;
+}
+
+/* Подписка — сообщение о результате */
+.newsletter__result {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    border-left: 3px solid;
+}
+
+.newsletter__result--ok {
+    color: var(--moss);
+    border-color: var(--moss);
+    background: rgba(92, 82, 56, 0.08);
+}
+
+.newsletter__result--error {
+    color: var(--burgundy);
+    border-color: var(--burgundy);
+    background: rgba(73, 14, 14, 0.07);
 }
