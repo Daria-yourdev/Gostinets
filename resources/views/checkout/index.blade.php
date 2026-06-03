@@ -41,7 +41,7 @@
 
                         <div class="checkout-fields checkout-fields--2col">
                             <label class="checkout-field">
-                                <span class="checkout-field__label">Имя</span>
+                                <span class="checkout-field__label">Имя *</span>
                                 <input type="text" name="contact_name" maxlength="100"
                                     value="{{ old('contact_name', $defaults['contact_name'] ?? '') }}"
                                     placeholder="Имя" required>
@@ -51,7 +51,7 @@
                             </label>
 
                             <label class="checkout-field">
-                                <span class="checkout-field__label">Почта</span>
+                                <span class="checkout-field__label">Почта *</span>
                                 <input type="email" name="contact_email" maxlength="160"
                                     value="{{ old('contact_email', $defaults['contact_email'] ?? '') }}"
                                     placeholder="email@example.ru" required>
@@ -61,7 +61,7 @@
                             </label>
 
                             <label class="checkout-field checkout-field--wide">
-                                <span class="checkout-field__label">Телефон</span>
+                                <span class="checkout-field__label">Телефон *</span>
                                 <input type="tel" name="contact_phone" maxlength="32"
                                     value="{{ old('contact_phone', $defaults['contact_phone'] ?? '') }}"
                                     placeholder="+7 (___) ___-__-__" required>
@@ -118,7 +118,7 @@
 
                         <div class="checkout-fields checkout-fields--2col" style="margin-top: 20px;">
                             <label class="checkout-field">
-                                <span class="checkout-field__label">Город</span>
+                                <span class="checkout-field__label">Город *</span>
                                 @php
                                 $isPickup = ($deliveryChoice['method'] ?? '') === 'pickup';
                                 $cityValue = $isPickup
@@ -140,14 +140,14 @@
                             </label>
 
                             <label class="checkout-field">
-                                <span class="checkout-field__label">Индекс</span>
+                                <span class="checkout-field__label">Индекс *</span>
                                 <input type="text" name="delivery_zip" maxlength="6"
                                     value="{{ old('delivery_zip', $defaults['delivery_zip'] ?? '') }}"
                                     placeholder="420012" inputmode="numeric">
                             </label>
 
                             <label class="checkout-field checkout-field--wide">
-                                <span class="checkout-field__label">Адрес</span>
+                                <span class="checkout-field__label">Адрес *</span>
                                 <input type="text" name="delivery_address" maxlength="200"
                                     value="{{ old('delivery_address', $defaults['delivery_address'] ?? '') }}"
                                     placeholder="ул. Баумана, 12, кв. 34" required>
@@ -227,6 +227,7 @@
                     <h2 class="checkout-summary__title">В мешочке</h2>
 
                     <ul class="checkout-summary__items">
+                        {{-- Обычные товары --}}
                         @foreach($items as $row)
                         @php $p = $row['product']; @endphp
                         <li class="checkout-summary__item" style="--jam: {{ $p->jamColor() }}">
@@ -241,6 +242,26 @@
                             </div>
                             <div class="checkout-summary__item-price">
                                 {{ number_format($row['subtotal'], 0, '.', ' ') }} ₽
+                            </div>
+                        </li>
+                        @endforeach
+
+                        {{-- Кастомные варенья из котла --}}
+                        @foreach($customItems as $row)
+                        @php $jam = $row['custom']; @endphp
+                        <li class="checkout-summary__item checkout-summary__item--custom"
+                            style="--jam: var(--burgundy);">
+                            <div class="checkout-summary__visual checkout-summary__visual--custom">
+                                <img src="{{ asset('media/cotel/kastom_card.jpg') }}"
+                                    alt="" loading="lazy">
+                                <span class="checkout-summary__qty">1</span>
+                            </div>
+                            <div class="checkout-summary__item-info">
+                                <strong>«{{ $jam->label_name ?: 'Своё варенье' }}»</strong>
+                                <small>из котла · {{ $jam->berry_main }} · {{ $jam->jar_size }} мл</small>
+                            </div>
+                            <div class="checkout-summary__item-price">
+                                {{ number_format($jam->price, 0, '.', ' ') }} ₽
                             </div>
                         </li>
                         @endforeach

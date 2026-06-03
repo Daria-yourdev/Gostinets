@@ -10,7 +10,7 @@
 
             <label class="admin-field">
                 <span class="admin-field__label">Название <em>*</em></span>
-                <input type="text" name="name" maxlength="160" required
+                <input type="text" name="name" maxlength="160"
                        value="{{ old('name', $product->name) }}" placeholder="Вишнёвое варенье">
                 @error('name')<span class="admin-field__err">{{ $message }}</span>@enderror
             </label>
@@ -82,7 +82,7 @@
                 <label class="admin-field">
                     <span class="admin-field__label">Цвет варенья (hex)</span>
                     <input type="text" name="jam_color" maxlength="7" pattern="^#[0-9A-Fa-f]{6}$"
-                           value="{{ old('jam_color', $product->jam_color) }}" placeholder="#7E1A1A">
+                           value="{{ old('jam_color', $product->jam_color ?: '#7E1A1A') }}"placeholder="#7E1A1A">
                     @error('jam_color')<span class="admin-field__err">{{ $message }}</span>@enderror
                 </label>
             </div>
@@ -117,14 +117,14 @@
 
             <label class="admin-field">
                 <span class="admin-field__label">Цена, ₽ <em>*</em></span>
-                <input type="number" name="price" min="0" max="99999" required
+                <input type="number" name="price" max="99999"
                        value="{{ old('price', $product->price ?: 0) }}">
                 @error('price')<span class="admin-field__err">{{ $message }}</span>@enderror
             </label>
 
             <label class="admin-field">
                 <span class="admin-field__label">Вес, г <em>*</em></span>
-                <input type="number" name="weight" min="1" max="9999" required
+                <input type="number" name="weight" max="9999"
                        value="{{ old('weight', $product->weight ?: 250) }}">
                 @error('weight')<span class="admin-field__err">{{ $message }}</span>@enderror
             </label>

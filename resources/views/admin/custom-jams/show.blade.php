@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('title', "Котелок #{$jam->id}")
-@section('heading', "Котелок #{$jam->id}")
+@section('title', "Кастом #{$jam->id}")
+@section('heading', "Кастом #{$jam->id}")
 
 @section('content')
 
@@ -120,7 +120,7 @@ $spices = is_array($jam->spices) ? $jam->spices : json_decode($jam->spices ?? '[
             </form>
         </section>
 
-        <section class="admin-block">
+        <!-- <section class="admin-block">
             <header class="admin-block__head"><h2>Когда</h2></header>
             <dl class="admin-dl">
                 <div>
@@ -132,7 +132,7 @@ $spices = is_array($jam->spices) ? $jam->spices : json_decode($jam->spices ?? '[
                     <dd>{{ $jam->updated_at->format('d.m.Y H:i') }}</dd>
                 </div>
             </dl>
-        </section>
+        </section> -->
     </aside>
 </div>
 

@@ -8,7 +8,6 @@
     <meta name="base-url" content="{{ rtrim(url('/'), '/') }}">
     <meta name="description" content="Варенье ручной варки от молодой Яги — натуральные ягоды, медный таз, без консервантов. Доставка по РФ.">
 
-    {{-- OG-теги для соцсетей (рекомендация продакшена) --}}
     <meta property="og:title" content="Гостинецъ — варенье ручной варки">
     <meta property="og:description" content="Банка варенья, в которой спит лето, сад, костёр и тёплый вечер. 23 сорта, ручная варка, доставка по РФ.">
     <meta property="og:image" content="{{ asset('media/og-image.png') }}">
@@ -40,7 +39,20 @@
                         <circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.2" />
                     </svg>
                     <span class="top-bar__loc-text">
-                        Доставка: <strong id="user-city">По России</strong>
+                        @php
+                        $dc = session('delivery_choice');
+                        $deliveryLabel = 'По России';
+                        if ($dc) {
+                        if (($dc['method'] ?? '') === 'pickup') {
+                        $deliveryLabel = 'Самовывоз, Казань';
+                        } elseif (($dc['mode'] ?? '') === 'gift') {
+                        $deliveryLabel = 'В подарок · ' . (($dc['method'] ?? '') === 'post' ? 'Почта' : 'СДЭК');
+                        } else {
+                        $deliveryLabel = ($dc['method'] ?? '') === 'post' ? 'Почта России' : 'СДЭК';
+                        }
+                        }
+                        @endphp
+                        Доставка: <strong id="user-city">{{ $deliveryLabel }}</strong>
                     </span>
                     <button type="button" class="top-bar__city-btn" id="change-city-btn">
                         Изменить способ доставки
@@ -199,7 +211,7 @@
                             </a>
 
                             @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" class="user-menu__item --admin" role="menuitem">
+                            <a href="{{ route('admin.orders.index') }}" class="user-menu__item --admin" role="menuitem">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="M12 2 L14.5 8 L21 8.5 L16 13 L17.5 20 L12 16.5 L6.5 20 L8 13 L3 8.5 L9.5 8 Z" />
@@ -258,17 +270,17 @@
                         </svg>
                         <div>
                             <strong>По России</strong>
-                            <span>СДЭК или Почта России · 350–250 ₽</span>
+                            <span>СДЭК или Почта России</span>
                         </div>
                     </div>
                     <div class="delivery-option__sub">
                         <label class="delivery-suboption">
                             <input type="radio" name="russia-method" value="cdek" checked>
-                            <span><strong>СДЭК</strong> — 350 ₽ · 3–7 дней</span>
+                            <span><strong>СДЭК</strong> · 3–7 дней</span>
                         </label>
                         <label class="delivery-suboption">
                             <input type="radio" name="russia-method" value="post">
-                            <span><strong>Почта России</strong> — 250 ₽ · 7–21 день</span>
+                            <span><strong>Почта России</strong> · 7–21 день</span>
                         </label>
                     </div>
                 </button>
@@ -306,11 +318,11 @@
                     <div class="delivery-option__sub">
                         <label class="delivery-suboption">
                             <input type="radio" name="gift-method" value="cdek" checked>
-                            <span><strong>СДЭК</strong> — 350 ₽</span>
+                            <span><strong>СДЭК</strong> · 3–7 дней</span>
                         </label>
                         <label class="delivery-suboption">
                             <input type="radio" name="gift-method" value="post">
-                            <span><strong>Почта России</strong> — 250 ₽</span>
+                            <span><strong>Почта России</strong> · 7–21 дней</span>
                         </label>
                         <label class="delivery-suboption">
                             <input type="radio" name="gift-method" value="pickup">
@@ -325,35 +337,6 @@
             </button>
         </div>
     </div>
-
-    {{-- CITY MODAL --}}
-    <!-- <div class="city-modal" id="city-modal" hidden role="dialog" aria-modal="true" aria-labelledby="city-modal-title">
-        <div class="city-modal__overlay" id="city-modal-overlay"></div>
-        <div class="city-modal__inner">
-            <button type="button" class="city-modal__close" id="city-modal-close" aria-label="Закрыть">×</button>
-            <h3 id="city-modal-title">Выберите ваш город</h3>
-            <p>Это поможет рассчитать стоимость и сроки доставки.</p>
-            <div class="city-modal__list">
-                <button type="button" class="city-modal__item" data-city="Казань">
-                    Казань <small>по умолчанию</small>
-                </button>
-                <button type="button" class="city-modal__item" data-city="Москва">Москва</button>
-                <button type="button" class="city-modal__item" data-city="Санкт-Петербург">Санкт-Петербург</button>
-                <button type="button" class="city-modal__item" data-city="Tula">Тула</button>
-                <button type="button" class="city-modal__item" data-city="Нижний Новгород">Нижний Новгород</button>
-                <button type="button" class="city-modal__item" data-city="Екатеринбург">Екатеринбург</button>
-                <button type="button" class="city-modal__item" data-city="Новосибирск">Новосибирск</button>
-                <button type="button" class="city-modal__item" data-city="Самара">Самара</button>
-                <button type="button" class="city-modal__item" data-city="Уфа">Уфа</button>
-                <button type="button" class="city-modal__item" data-city="Краснодар">Краснодар</button>
-            </div>
-            <div class="city-modal__form">
-                <input type="text" class="city-modal__input" id="city-modal-input"
-                    placeholder="Или введите ваш город..." aria-label="Свой город">
-                <button type="button" class="city-modal__save" id="city-modal-save">Сохранить</button>
-            </div>
-        </div>
-    </div> -->
 
     @yield('content')
 
@@ -437,12 +420,11 @@
             </div>
 
             <div class="footer__bottom">
-                <span>© 2025–2026 · Гостинецъ</span>
+                <span>© 2026 · Гостинецъ</span>
                 <div class="footer__bottom-nav">
                     <a href="{{ route('legal.privacy') }}">Политика конфиденциальности</a>
                     <a href="{{ route('legal.oferta') }}">Договор оферты</a>
                 </div>
-                <!-- <span>дипломный проект · Пирогова Д. Д.</span> -->
             </div>
         </div>
     </footer>
@@ -462,7 +444,7 @@
                     Войти в избу
                 </button>
                 <button type="button" class="auth-modal__tab" data-tab="register" role="tab" aria-selected="false">
-                    Зарегистрироваться
+                    Представиться
                 </button>
             </div>
 
@@ -480,14 +462,14 @@
                 </div>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Электронная почта</span>
+                    <span class="auth-field__label">Электронная почта *</span>
                     <input type="email" name="email" class="auth-field__input"
                         autocomplete="email" autocapitalize="none" spellcheck="false" required>
                     <span class="auth-field__error" data-error="email"></span>
                 </label>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Тайное слово</span>
+                    <span class="auth-field__label">Тайное слово *</span>
                     <span class="auth-field__wrap">
                         <input type="password" name="password" class="auth-field__input"
                             autocomplete="current-password" required>
@@ -521,7 +503,7 @@
                 <div class="auth-modal__footer">
                     Впервые здесь?
                     <button type="button" class="auth-modal__switch" data-switch="register">
-                        Завести грамоту →
+                        Представиться →
                     </button>
                 </div>
             </form>
@@ -535,26 +517,26 @@
                 novalidate>
                 @csrf
                 <div class="auth-modal__head">
-                    <h3>Гостевая грамота</h3>
-                    <p>впиши имя в книгу — и Мария приготовит банку</p>
+                    <h3>Книга гостей</h3>
+                    <!-- <p>впиши имя в книгу — и Мария приготовит банку</p> -->
                 </div>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Как звать?</span>
+                    <span class="auth-field__label">Как звать? *</span>
                     <input type="text" name="name" class="auth-field__input"
                         autocomplete="name" maxlength="60" required>
                     <span class="auth-field__error" data-error="name"></span>
                 </label>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Электронная почта</span>
+                    <span class="auth-field__label">Электронная почта *</span>
                     <input type="email" name="email" class="auth-field__input"
                         autocomplete="email" autocapitalize="none" spellcheck="false" required>
                     <span class="auth-field__error" data-error="email"></span>
                 </label>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Тайное слово</span>
+                    <span class="auth-field__label">Тайное слово *</span>
                     <span class="auth-field__wrap">
                         <input type="password" name="password" class="auth-field__input"
                             autocomplete="new-password" required>
@@ -571,7 +553,7 @@
                 </label>
 
                 <label class="auth-field">
-                    <span class="auth-field__label">Повтори тайное слово</span>
+                    <span class="auth-field__label">Повтори тайное слово *</span>
                     <input type="password" name="password_confirmation" class="auth-field__input"
                         autocomplete="new-password" required>
                     <span class="auth-field__error" data-error="password_confirmation"></span>
@@ -583,7 +565,7 @@
                 </label>
 
                 <button type="submit" class="auth-modal__submit">
-                    <span class="auth-modal__submit-text">Завести грамоту</span>
+                    <span class="auth-modal__submit-text">Войти в избу</span>
                     <svg class="auth-modal__submit-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6" />

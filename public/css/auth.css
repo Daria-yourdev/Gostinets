@@ -432,12 +432,14 @@
 .auth-modal__alert.--error {
     background: #FFF0EC;
     color: var(--burgundy);
+    border: 0;
     /* border: 1px solid rgba(73, 14, 14, 0.2); */
 }
 
 .auth-modal__alert.--success {
     background: #F2F4EC;
     color: var(--moss, #5C5238);
+    border: 0;
     /* border: 1px solid rgba(92, 82, 56, 0.3); */
 }
 

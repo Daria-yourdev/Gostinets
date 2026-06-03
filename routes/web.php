@@ -15,16 +15,15 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-/* ============== ПУБЛИЧНЫЕ ============== */
+/* ПУБЛИЧНЫЕ */
 
 Route::get('/', fn() => view('home'))->name('home');
 
-// Каталог + страница товара + поиск
 Route::get('/catalog',        [CatalogController::class, 'index'])->name('catalog');
 Route::get('/catalog/{slug}', [CatalogController::class, 'show'])->name('product');
 
 
-/* ============== КОРЗИНА ============== */
+/* КОРЗИНА */
 Route::get('/cart',           [CartController::class, 'index'])->name('cart');
 Route::post('/cart/add',       [CartController::class, 'add'])->name('cart.add');
 Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
@@ -33,7 +32,7 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart
 
 Route::delete('/cart/custom/{customJam}', [CartController::class, 'destroyCustom'])->name('cart.custom.destroy');
 
-/* ============== ОФОРМЛЕНИЕ ЗАКАЗА ============== */
+/* ОФОРМЛЕНИЕ ЗАКАЗА */
 Route::middleware('auth')->group(function () {
     Route::get('/checkout',                 [CheckoutController::class, 'index'])->name('checkout');
     Route::post('/checkout',                [CheckoutController::class, 'store'])->name('checkout.store');
@@ -42,13 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/{order}/fail',    [CheckoutController::class, 'fail'])->name('checkout.fail');
 });
 
-/* ============== WEBHOOK ЮКАССЫ ============== */
-// Этот URL надо прописать в личном кабинете ЮКассы.
-// CSRF отключён в VerifyCsrfToken::$except.
+/* WEBHOOK ЮКАССЫ */
 Route::post('/yookassa/webhook', [PaymentController::class, 'webhook'])->name('yookassa.webhook');
 
 
-/* ============== КОТЕЛОК (кастомное варенье) ============== */
+/* КОТЕЛОК (кастомное варенье) */
 Route::get('/cauldron',         [CauldronController::class, 'index'])->name('cauldron');
 Route::post('/cauldron/preview', [CauldronController::class, 'preview'])->name('cauldron.preview');
 
@@ -58,7 +55,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-/* ============== АУТЕНТИФИКАЦИЯ ============== */
+/* АУТЕНТИФИКАЦИЯ */
 Route::middleware('guest')->group(function () {
     Route::post('/login',    [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -68,7 +65,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')->name('logout');
 
 
-/* ============== КАБИНЕТ ПОЛЬЗОВАТЕЛЯ ============== */
+/* КАБИНЕТ ПОЛЬЗОВАТЕЛЯ */
 Route::middleware('auth')->group(function () {
     Route::get('/account', [\App\Http\Controllers\AccountController::class, 'index'])->name('account');
     Route::get('/orders',  [\App\Http\Controllers\AccountController::class, 'orders'])->name('orders');
@@ -77,14 +74,14 @@ Route::middleware('auth')->group(function () {
 });
 
 
-/* ============== АДМИНКА ============== */
+/* АДМИНКА */
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')->name('admin.')
     ->group(function () {
 
         // Обзор / дашборд
-        Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/', [\App\Http\Controllers\Admin\OrderController::class, 'index'])
+            ->name('orders.index');
 
         // Заказы
         Route::get('orders',                [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');

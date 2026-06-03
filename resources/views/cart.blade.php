@@ -138,7 +138,7 @@
                         <div class="cart-item__visual cart-item__visual--custom">
                             <!-- <div class="cart-item__jambar" aria-hidden="true"></div> -->
                             <img src="{{ asset('media/cotel/kastom_card.jpg') }}"
-                                alt="{{ $p->name }}" loading="lazy">
+                                alt="" loading="lazy">
                         </div>
 
                         <div class="cart-item__info">
@@ -188,14 +188,13 @@
 
                 <div class="cart-summary__row">
                     <span>За банки</span>
-                    <strong data-summary-subtotal>{{ number_format($subtotal + (isset($customItems) ? $customItems->sum('subtotal') : 0), 0, '.', ' ') }} ₽</strong>
+                    <strong data-summary-subtotal>{{ number_format($subtotal, 0, '.', ' ') }} ₽</strong>
                 </div>
 
                 <div class="cart-summary__row cart-summary__row--hint">
                     <span>Доставка</span>
                     <em>
-                        @php $fullSubtotal = $subtotal + (isset($customItems) ? $customItems->sum('subtotal') : 0); @endphp
-                        @if($fullSubtotal >= 3000)
+                        @if($subtotal >= 3000)
                         бесплатно (от 3 000 ₽)
                         @else
                         посчитаем дальше
@@ -237,7 +236,7 @@
                         </svg>
                     </button>
                     <p style="font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--ink-2); margin: 8px 0 0; text-align: center;">
-                        Заказ оформляется только для гостей с грамотой
+                        Заказ оформляется только для гостей из книги
                     </p>
                     @endauth
 

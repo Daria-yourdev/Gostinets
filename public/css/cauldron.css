@@ -1165,7 +1165,7 @@
     padding: 0 14px;
     max-height: 0;
     overflow: hidden;
-    border-radius: 8px;
+    /*     border-radius: 8px; */
     font-family: var(--serif);
     font-size: 14px;
     line-height: 1.4;
@@ -1271,5 +1271,11 @@
 
     .cauldron-gate__cta button {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cauldron__stage, .cauldron-steps {
+        display: none;
     }
 }

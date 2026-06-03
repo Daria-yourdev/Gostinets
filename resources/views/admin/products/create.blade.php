@@ -5,7 +5,7 @@
 
 @section('content')
 
-<a href="{{ route('admin.products.index') }}" class="admin-back">← к кладовой</a>
+<a href="{{ route('admin.products.index') }}" class="admin-back">← к каталогу</a>
 
 <form action="{{ route('admin.products.store') }}" method="POST" class="admin-form">
     @csrf

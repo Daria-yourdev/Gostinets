@@ -9,13 +9,13 @@
 
         <header class="account-head">
             <h1>
-                <span class="account-head__title">Моя грамота</span>
+                <span class="account-head__title">Моя страница</span>
                 <span class="account-head__sub">личные данные и адрес</span>
             </h1>
         </header>
 
         @if(session('flash'))
-        <div style="background: rgba(92, 82, 56, 0.1); border-left: 4px solid var(--moss); padding: 12px 18px; margin-bottom: 24px; font-family: var(--serif); font-style: italic; color: var(--moss);">
+        <div style="background: rgba(92, 82, 56, 0.1); padding: 12px 18px; margin-bottom: 24px; font-family: var(--serif); font-style: italic; color: var(--moss);">
             ✓ {{ session('flash') }}
         </div>
         @endif

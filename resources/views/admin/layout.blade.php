@@ -19,11 +19,11 @@
     {{-- БОКОВАЯ ПАНЕЛЬ --}}
     <aside class="admin-side" id="admin-side">
         <div class="admin-side__brand">
-            <a href="{{ route('admin.dashboard') }}" class="admin-side__logo">
-                <span class="admin-side__logo-mark">Г</span>
+            <a href="{{ route('admin.orders.index') }}" class="admin-side__logo">
+                <!-- <span class="admin-side__logo-mark">Г</span> -->
                 <span class="admin-side__logo-text">
-                    <strong>Хозяйская</strong>
-                    <small>Гостинецъ</small>
+                    <strong>АДМИНКА</strong>
+                    <!-- <small>Гостинецъ</small> -->
                 </span>
             </a>
             <button type="button" class="admin-side__close" id="admin-side-close"
@@ -33,19 +33,12 @@
         <nav class="admin-nav" aria-label="Навигация">
             @php $r = request()->route()?->getName(); @endphp
 
-            <a href="{{ route('admin.dashboard') }}"
-               class="admin-nav__item {{ $r === 'admin.dashboard' ? '--active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 12L12 3l9 9M5 10v10h14V10"/>
-                </svg>
-                <span>Сводка</span>
-            </a>
 
             <a href="{{ route('admin.orders.index') }}"
                class="admin-nav__item {{ str_starts_with($r ?? '', 'admin.orders') ? '--active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M6 2L4 6v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6l-2-4z M4 6h16 M10 12h4"/>
-                </svg>
+                </svg> -->
                 <span>Заказы</span>
                 @isset($adminBadges['orders_pending'])
                     @if($adminBadges['orders_pending'] > 0)
@@ -56,18 +49,18 @@
 
             <a href="{{ route('admin.products.index') }}"
                class="admin-nav__item {{ str_starts_with($r ?? '', 'admin.products') ? '--active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+               <!--  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M9 7 L15 7 L14 19 Q14 21 12 21 L12 21 Q10 21 10 19 Z M8 7 L16 7 M11 4 L11 2 L13 2 L13 4"/>
-                </svg>
-                <span>Кладовая</span>
+                </svg> -->
+                <span>Каталог</span>
             </a>
 
             <a href="{{ route('admin.custom-jams.index') }}"
                class="admin-nav__item {{ str_starts_with($r ?? '', 'admin.custom-jams') ? '--active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 11h14l-1 8q0 2-2 2H8q-2 0-2-2zM3 11h18M10 7q1-3 2 0M14 6q1-3 2 0"/>
-                </svg>
-                <span>Котёл</span>
+                </svg> -->
+                <span>Кастом</span>
                 @isset($adminBadges['customs_pending'])
                     @if($adminBadges['customs_pending'] > 0)
                         <em class="admin-nav__badge">{{ $adminBadges['customs_pending'] }}</em>
@@ -77,11 +70,11 @@
 
             <a href="{{ route('admin.users.index') }}"
                class="admin-nav__item {{ str_starts_with($r ?? '', 'admin.users') ? '--active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="8" r="4"/>
                     <path d="M4 21v-1a8 8 0 0 1 16 0v1"/>
-                </svg>
-                <span>Гости</span>
+                </svg> -->
+                <span>Пользователи</span>
             </a>
         </nav>
 
@@ -90,7 +83,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M15 6l-6 6 6 6"/>
                 </svg>
-                к витрине
+                к каталогу
             </a>
         </div>
     </aside>

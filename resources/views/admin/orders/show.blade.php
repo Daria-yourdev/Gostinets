@@ -215,7 +215,7 @@
         </section>
 
         {{-- История --}}
-        <section class="admin-block">
+        <!-- <section class="admin-block">
             <header class="admin-block__head"><h2>История</h2></header>
             <ul class="admin-timeline">
                 <li>
@@ -251,7 +251,7 @@
                     </div>
                 </li>
             </ul>
-        </section>
+        </section> -->
     </aside>
 </div>
 

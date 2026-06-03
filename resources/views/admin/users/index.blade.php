@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('title', 'Гости')
-@section('heading', 'Гости')
+@section('title', 'Пользователи')
+@section('heading', 'Пользователи')
 
 @section('content')
 

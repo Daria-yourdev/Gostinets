@@ -293,15 +293,51 @@
     white-space: nowrap;
 }
 
-.account-status--pending    { color: #B8860B; border-color: #B8860B; }
-.account-status--paid       { color: var(--moss); border-color: var(--moss); }
-.account-status--processing { color: var(--gold); border-color: var(--gold); }
-.account-status--shipped    { color: #2E5A8E; border-color: #2E5A8E; }
-.account-status--delivered  { color: #1F5F1F; border-color: #1F5F1F; background: rgba(31, 95, 31, 0.05); }
-.account-status--canceled   { color: var(--burgundy); border-color: var(--burgundy); }
-.account-status--ordered    { color: #B8860B; border-color: #B8860B; }
-.account-status--cooking    { color: var(--burgundy); border-color: var(--burgundy); }
-.account-status--ready      { color: var(--moss); border-color: var(--moss); }
+.account-status--pending {
+    color: #B8860B;
+    border-color: #B8860B;
+}
+
+.account-status--paid {
+    color: var(--moss);
+    border-color: var(--moss);
+}
+
+.account-status--processing {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+.account-status--shipped {
+    color: #2E5A8E;
+    border-color: #2E5A8E;
+}
+
+.account-status--delivered {
+    color: #1F5F1F;
+    border-color: #1F5F1F;
+    background: rgba(31, 95, 31, 0.05);
+}
+
+.account-status--canceled {
+    color: var(--burgundy);
+    border-color: var(--burgundy);
+}
+
+.account-status--ordered {
+    color: #B8860B;
+    border-color: #B8860B;
+}
+
+.account-status--cooking {
+    color: var(--burgundy);
+    border-color: var(--burgundy);
+}
+
+.account-status--ready {
+    color: var(--moss);
+    border-color: var(--moss);
+}
 
 /* Пагинация */
 .account-pagination {
@@ -402,5 +438,11 @@
 
     .account-jams {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-grid {
+        flex-direction: column;
     }
 }

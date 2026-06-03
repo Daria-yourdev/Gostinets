@@ -41,19 +41,19 @@
             </div> -->
 
             <div class="cauldron-gate__copy">
-                <span class="cauldron-gate__kicker">только для гостей с грамотой</span>
+                <span class="cauldron-gate__kicker">только для гостей из книги</span>
                 <h2>Котелок открывают <em>своим</em></h2>
                 <p>
                     Положить в котёл собственную банку — особая радость:
                     выбрать ягоду, добавить специй, шепнуть мастеру пожелание.
                     Чтобы Мария знала, кому варить и куда отправить —
-                    заведи гостевую грамоту. Это <strong>бесплатно</strong>
+                    представься. Это <strong>бесплатно</strong>
                     и займёт меньше минуты.
                 </p>
 
                 <div class="cauldron-gate__cta">
                     <button type="button" class="btn-primary" data-open-auth="register">
-                        <span>Завести грамоту</span>
+                        <span>Представиться</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6" />
@@ -415,7 +415,7 @@
                         </span>
                     </button>
                     <p class="cauldron-note">
-                        Гостям с грамотой котёл откроется сразу.
+                        Гостям из книги котёл откроется сразу.
                         Регистрация — бесплатная, заведёт за минуту.
                     </p>
                     @endauth

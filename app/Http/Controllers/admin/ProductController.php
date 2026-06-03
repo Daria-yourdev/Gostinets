@@ -68,7 +68,7 @@ class ProductController extends Controller
         Product::create($data);
 
         return redirect()->route('admin.products.index')
-            ->with('flash', 'Банка добавлена в кладовую');
+            ->with('flash', 'Банка добавлена в каталог');
     }
 
     /**
@@ -117,7 +117,7 @@ class ProductController extends Controller
 
         $product->delete();
         return redirect()->route('admin.products.index')
-            ->with('flash', 'Банка убрана из кладовой');
+            ->with('flash', 'Банка убрана из каталога');
     }
 
     /* ============== HELPERS ============== */
@@ -146,11 +146,52 @@ class ProductController extends Controller
             'is_active'         => ['nullable', 'boolean'],
             'stock'             => ['required', 'integer', 'min:0', 'max:9999'],
         ], [
-            'name.required'       => 'Без имени банка не банка.',
-            'berry_type.required' => 'Из чего варено?',
-            'mood.required'       => 'Какое у банки настроение?',
-            'price.required'      => 'Цена обязательна.',
-            'image_path.regex' => 'Путь должен быть вида media/catalog/имя.png',
+            'name.required' => 'Укажите название продукта.',
+            'name.string'   => 'Название должно быть текстом.',
+            'name.max'      => 'Название не должно превышать 160 символов.',
+
+            'subtitle.string' => 'Подзаголовок должен быть текстом.',
+            'subtitle.max'    => 'Подзаголовок не должен превышать 120 символов.',
+
+            'short_description.string' => 'Краткое описание должно быть текстом.',
+            'short_description.max'    => 'Краткое описание не должно превышать 300 символов.',
+
+            'description.string' => 'Описание должно быть текстом.',
+            'description.max'    => 'Описание не должно превышать 5000 символов.',
+
+            'berry_type.required' => 'Выберите вид ягоды.',
+            'berry_type.in'       => 'Выбран недопустимый вид ягоды.',
+
+            'mood.required' => 'Выберите настроение продукта.',
+            'mood.in'       => 'Выбрано недопустимое настроение.',
+
+            'price.required' => 'Укажите цену.',
+            'price.integer'  => 'Цена должна быть целым числом.',
+            'price.min'      => 'Цена должна быть больше нуля.',
+            'price.max'      => 'Цена слишком большая.',
+
+            'weight.required' => 'Укажите вес.',
+            'weight.integer'  => 'Вес должен быть целым числом.',
+            'weight.min'      => 'Вес должен быть больше нуля.',
+            'weight.max'      => 'Вес указан некорректно.',
+
+            'jam_color.string' => 'Цвет должен быть строкой.',
+            'jam_color.regex'  => 'Цвет должен быть в формате HEX, например #7E1A1A.',
+
+            'image_path.string' => 'Путь к изображению должен быть строкой.',
+            'image_path.max'    => 'Путь к изображению слишком длинный.',
+            'image_path.regex'  => 'Путь должен быть вида media/catalog/имя.png.',
+
+            'badge.in' => 'Выбран недопустимый бейдж.',
+
+            'is_sugar_free.boolean' => 'Некорректное значение для признака "без сахара".',
+            'is_gift.boolean'       => 'Некорректное значение для подарочного товара.',
+            'is_active.boolean'     => 'Некорректное значение для активности товара.',
+
+            'stock.required' => 'Укажите остаток на складе.',
+            'stock.integer'  => 'Остаток должен быть целым числом.',
+            'stock.min'      => 'Остаток не может быть отрицательным.',
+            'stock.max'      => 'Остаток слишком большой.',
         ]) + [
             'is_sugar_free' => $r->boolean('is_sugar_free'),
             'is_gift'       => $r->boolean('is_gift'),

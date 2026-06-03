@@ -33,7 +33,6 @@ class AuthController extends Controller
         );
 
         if (!$ok) {
-            // Не разглашаем, что именно не так (почта или пароль) — стандартная практика
             throw ValidationException::withMessages([
                 'email' => ['Не сходится — почта или тайное слово.'],
             ]);
@@ -44,9 +43,8 @@ class AuthController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Для админа отправляем сразу в админку, остальных — на referrer или главную
         $redirect = $user->isAdmin()
-            ? route('admin.dashboard')
+            ? route('admin.orders.index')
             : ($request->input('redirect') ?: url()->previous());
 
         return $this->respond($request, [
@@ -67,7 +65,7 @@ class AuthController extends Controller
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'password' => $data['password'], // хешируется автоматически (cast 'hashed')
+            'password' => $data['password'],
             'role'     => User::ROLE_USER,
         ]);
 

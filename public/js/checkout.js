@@ -9,6 +9,43 @@
     const form = document.getElementById('checkout-form');
     if (!form) return;
 
+    /* === АВТОПОДСТАНОВКА ГОРОДА ДЛЯ САМОВЫВОЗА === */
+    const cityInput = form.querySelector('input[name="delivery_city"]');
+    const radios = form.querySelectorAll('input[name="delivery_method"]');
+
+    // Сохраняем то, что пользователь вводил вручную (на случай если переключит обратно)
+    let savedCity = cityInput?.value && cityInput.value !== 'Казань' ? cityInput.value : '';
+
+    function syncCity() {
+        const checked = form.querySelector('input[name="delivery_method"]:checked');
+        if (!checked || !cityInput) return;
+
+        if (checked.value === 'pickup') {
+            // Запомним то что было, заменим на Казань и заблокируем
+            if (cityInput.value && cityInput.value !== 'Казань') {
+                savedCity = cityInput.value;
+            }
+            cityInput.value = 'Казань';
+            cityInput.readOnly = true;
+            cityInput.style.background = 'var(--bg-warm)';
+            cityInput.style.opacity = '0.7';
+            cityInput.style.cursor = 'not-allowed';
+        } else {
+            // Разблокировать и вернуть то что было
+            cityInput.readOnly = false;
+            cityInput.style.background = '';
+            cityInput.style.opacity = '';
+            cityInput.style.cursor = '';
+            if (cityInput.value === 'Казань' && savedCity) {
+                cityInput.value = savedCity;
+            }
+        }
+    }
+
+    radios.forEach(r => r.addEventListener('change', syncCity));
+    // Прогон при загрузке — на случай если pickup уже выбран
+    syncCity();
+
     /* ============================================================
        Форматирование числа
     ============================================================ */

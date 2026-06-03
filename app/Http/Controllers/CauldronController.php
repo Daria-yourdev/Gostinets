@@ -83,7 +83,6 @@ class CauldronController extends Controller
        =========================================================== */
     public function store(Request $request)
     {
-        // Двойная защита, на случай если middleware пропустит
         if (!auth()->check()) {
             return response()->json([
                 'ok' => false,
@@ -104,10 +103,9 @@ class CauldronController extends Controller
             'dedication'   => $data['dedication'] ?? null,
             'whisper'      => $data['whisper'] ?? null,
             'price'        => CustomJam::calculatePrice($data),
-            'status'       => 'draft', // Всегда draft — заказ идёт через корзину
+            'status'       => 'draft',
         ]);
 
-        // Кладём в сессионную корзину
         app(\App\Services\CartService::class)->addCustom($jam->id);
 
         return response()->json([

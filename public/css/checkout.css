@@ -93,7 +93,7 @@
     background: var(--paper);
     border: 1.5px solid var(--ink);
     padding: 24px 28px;
-    box-shadow: 4px 4px 0 rgba(73, 14, 14, 0.35);
+   /*  box-shadow: 4px 4px 0 rgba(73, 14, 14, 0.35); */
 }
 
 .checkout-block__head {
@@ -214,7 +214,7 @@
     font-family: var(--sans);
     font-style: italic;
     font-size: 13px;
-    color:  rgb(181, 0, 0);
+    color: rgb(181, 0, 0);
 }
 
 
@@ -875,4 +875,23 @@
     .checkout-delivery__inner {
         padding: 12px 14px;
     }
+}
+
+.checkout-summary__item--custom {
+    background: rgba(201, 169, 97, 0.06);
+    border-left: 3px solid var(--gold);
+    padding-left: 8px;
+    margin-left: -8px;
+}
+
+.checkout-summary__visual--custom {
+    background: var(--paper);
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+.checkout-summary__visual--custom svg {
+    width: 28px;
+    height: 28px;
 }

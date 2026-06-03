@@ -95,7 +95,6 @@ class CheckoutController extends Controller
             'agree.accepted'            => 'Без согласия с правилами заказ не оформить.',
         ]);
 
-        // Снапшот корзины и сумм
         $items       = $this->cart->items();
         $customItems = $this->cart->customItems();
 
@@ -115,7 +114,6 @@ class CheckoutController extends Controller
         $delivery    = $this->cart->deliveryCost($data['delivery_method']);
         $total       = $subtotal + $delivery;
 
-        // Создаём заказ + позиции в транзакции
         $order = DB::transaction(function () use ($data, $items, $customItems, $subtotal, $delivery, $total) {
             $order = Order::create(array_merge($data, [
                 'user_id'       => auth()->id(),
@@ -126,7 +124,6 @@ class CheckoutController extends Controller
                 'status'        => 'pending',
             ]));
 
-            // Обычные товары из кладовой
             foreach ($items as $row) {
                 $p = $row['product'];
                 OrderItem::create([

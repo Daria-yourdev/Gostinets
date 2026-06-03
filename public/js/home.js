@@ -159,7 +159,7 @@
         const total = slides.length;
         if (total < 2) return;
 
-        const AUTOPLAY_MS = 8000;
+        const AUTOPLAY_MS = 5000;
 
         // Клонируем первый и последний слайды
         const firstClone = slides[0].cloneNode(true);

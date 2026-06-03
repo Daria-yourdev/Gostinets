@@ -14,10 +14,13 @@ class CartController extends Controller
      */
     public function index()
     {
+        $customItems = $this->cart->customItems();
+        $customsSum  = $customItems->sum('subtotal');
+
         return view('cart', [
             'items'       => $this->cart->items(),
-            'customItems' => $this->cart->customItems(),
-            'subtotal'    => $this->cart->subtotal(),
+            'customItems' => $customItems,
+            'subtotal'    => $this->cart->subtotal() + $customsSum,  // ← теперь с кастомами
             'count'       => $this->cart->count(),
         ]);
     }

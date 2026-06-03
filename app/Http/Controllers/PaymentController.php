@@ -41,7 +41,6 @@ class PaymentController extends Controller
 
     private function isYookassaIp(string $ip): bool
     {
-        // В DEV-режиме пропускаем — иначе ngrok не поработает
         if (app()->environment('local')) {
             return true;
         }
